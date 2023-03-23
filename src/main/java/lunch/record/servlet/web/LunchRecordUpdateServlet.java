@@ -84,7 +84,7 @@ public class LunchRecordUpdateServlet extends HttpServlet {
                 "   <li>updateAt=" + updatedLunchRecord.getUpdateAt() + "</li>\n" +
                 "   <li>createAt=" + updatedLunchRecord.getCreateAt() + "</li>\n" +
                 "</ul>\n" +
-                "<a href=\"/servlet/lunchRecord/list\">조회</a>\n" +
+                "<a href=\"/jsp/lunchRecord/lunchRecords.jsp\">조회</a>\n" +
                 "</body>\n" +
                 "</html>\n"
         );
