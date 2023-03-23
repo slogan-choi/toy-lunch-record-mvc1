@@ -5,7 +5,7 @@
         <title>점심 기록</title>
     </head>
     <body>
-        <form action="/servlet/lunchRecord/save" method="post" enctype="multipart/form-data">
+        <form action="save" method="post" enctype="multipart/form-data">
             <input type="hidden" name="id" />
             식당:     <input type="text" name="restaurant" />
             메뉴:     <input type="text" name="menu" />

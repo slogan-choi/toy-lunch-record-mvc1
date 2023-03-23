@@ -1,9 +1,9 @@
-package lunch.record.servlet.web;
+package lunch.record.servlet.web.servletmvc;
 
-import lombok.extern.slf4j.Slf4j;
 import lunch.record.servlet.domain.LunchRecord;
 import lunch.record.servlet.domain.LunchRecordRepository;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.SQLException;
@@ -20,16 +19,16 @@ import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.List;
 
-@Slf4j
-@WebServlet(name = "lunchRecordSaveServlet", urlPatterns = "/servlet/lunchRecord/save")
-@MultipartConfig()
-public class LunchRecordSaveServlet extends HttpServlet {
+@WebServlet(name = "mvcLunchRecordSaveServlet", urlPatterns = "/servlet-mvc/lunchRecord/save")
+@MultipartConfig
+public class MvcLunchRecordSaveServlet extends HttpServlet {
 
     private LunchRecordRepository repository = LunchRecordRepository.getInstance();
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Blob blob;
+
         try {
             blob = new SerialBlob(request.getPart("image").getInputStream().readAllBytes());
         } catch (SQLException e) {
@@ -57,30 +56,12 @@ public class LunchRecordSaveServlet extends HttpServlet {
 
         LunchRecord savedLunchRecord = repository.findById((long) maxId);
 
-        response.setContentType("text/html");
-        response.setCharacterEncoding("utf-8");
-        PrintWriter writer = response.getWriter();
-        writer.write("<html>\n" +
-                "<head>\n" +
-                "   <meta charset=\"utf-8\">\n" +
-                "</head>\n" +
-                "<body>\n" +
-                "성공\n" +
-                "<ul>\n" +
-                "   <li>id=" + savedLunchRecord.getId() + "</li>\n" +
-                "   <li>restaurant=" + savedLunchRecord.getRestaurant() + "</li>\n" +
-                "   <li>menu=" + savedLunchRecord.getMenu() + "</li>\n" +
-                "   <li>image=" + savedLunchRecord.getImage() + "</li>\n" +
-                "   <li>price=" + savedLunchRecord.getPrice() + "</li>\n" +
-                "   <li>grade=" + savedLunchRecord.getGrade() + "</li>\n" +
-                "   <li>averageGrade=" + savedLunchRecord.getAverageGrade() + "</li>\n" +
-                "   <li>updateAt=" + savedLunchRecord.getUpdateAt() + "</li>\n" +
-                "   <li>createAt=" + savedLunchRecord.getCreateAt() + "</li>\n" +
-                "</ul>\n" +
-                "<a href=\"/jsp/lunchRecord/lunchRecords.jsp\">조회</a>\n" +
-                "</body>\n" +
-                "</html>\n"
-        );
+        // Model에 데이터를 보관한다.
+        request.setAttribute("lunchRecord", savedLunchRecord);
+
+        String viewPath = "/WEB-INF/views/save-result.jsp";
+        RequestDispatcher dispatcher = request.getRequestDispatcher(viewPath);
+        dispatcher.forward(request, response);
     }
 
     private Float getAverageGrade(LunchRecord lunchRecord) {
