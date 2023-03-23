@@ -41,12 +41,12 @@ public class FrontControllerServlet extends HttpServlet {
         String requestURI = request.getRequestURI();
 
         Controller controller = controllerMap.get(requestURI);
-
         if (controller == null) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
 
-        controller.process(request, response);
+        MyView view = controller.process(request, response);
+        view.render(request, response);
     }
 }

@@ -3,6 +3,7 @@ package lunch.record.servlet.web.frontcontroller.controller;
 import lunch.record.servlet.domain.LunchRecord;
 import lunch.record.servlet.domain.LunchRecordRepository;
 import lunch.record.servlet.web.frontcontroller.Controller;
+import lunch.record.servlet.web.frontcontroller.MyView;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,13 +17,11 @@ public class LunchRecordListController implements Controller {
     private LunchRecordRepository repository = LunchRecordRepository.getInstance();
 
     @Override
-    public void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public MyView process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<LunchRecord> lunchRecords = repository.findAll();
 
         request.setAttribute("lunchRecords", lunchRecords);
 
-        String viewPath = "/WEB-INF/views/lunchRecords.jsp";
-        RequestDispatcher dispatcher = request.getRequestDispatcher(viewPath);
-        dispatcher.forward(request, response);
+        return new MyView("/WEB-INF/views/lunchRecords.jsp");
     }
 }

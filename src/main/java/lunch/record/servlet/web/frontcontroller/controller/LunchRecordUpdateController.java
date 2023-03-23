@@ -3,6 +3,7 @@ package lunch.record.servlet.web.frontcontroller.controller;
 import lunch.record.servlet.domain.LunchRecord;
 import lunch.record.servlet.domain.LunchRecordRepository;
 import lunch.record.servlet.web.frontcontroller.Controller;
+import lunch.record.servlet.web.frontcontroller.MyView;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,7 +23,7 @@ public class LunchRecordUpdateController implements Controller {
     private LunchRecordRepository repository = LunchRecordRepository.getInstance();
 
     @Override
-    public void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public MyView process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Blob blob;
 
         try {
@@ -62,9 +63,7 @@ public class LunchRecordUpdateController implements Controller {
         // Model에 데이터를 담아서 보관한다.
         request.setAttribute("lunchRecord", updatedLunchRecord);
 
-        String viewPath = "/WEB-INF/views/update.jsp";
-        RequestDispatcher dispatcher = request.getRequestDispatcher(viewPath);
-        dispatcher.forward(request, response);
+        return new MyView("/WEB-INF/views/update.jsp");
     }
 
     private Float getAverageGrade(LunchRecord lunchRecord) {
