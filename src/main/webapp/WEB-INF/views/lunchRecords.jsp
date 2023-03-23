@@ -32,8 +32,8 @@
                     <td>${lunchRecord.averageGrade}</td>
                     <td>${lunchRecord.updateAt}</td>
                     <td>${lunchRecord.createAt}</td>
-                    <td> <a href="/servlet-mvc/lunchRecord/update-form?id=${lunchRecord.id}">수정</a> </td>
-                    <td> <a href="/servlet-mvc/lunchRecord/delete-form?id=${lunchRecord.id}">삭제</a> </td>
+                    <td> <a href="/front-controller/lunchRecord/update-form?id=${lunchRecord.id}">수정</a> </td>
+                    <td> <a href="/front-controller/lunchRecord/delete-form?id=${lunchRecord.id}">삭제</a> </td>
                 </tr>
             </c:forEach>
             </tbody>
