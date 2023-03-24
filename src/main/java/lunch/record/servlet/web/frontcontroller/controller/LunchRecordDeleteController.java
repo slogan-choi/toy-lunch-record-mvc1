@@ -2,22 +2,23 @@ package lunch.record.servlet.web.frontcontroller.controller;
 
 import lunch.record.servlet.domain.LunchRecordRepository;
 import lunch.record.servlet.web.frontcontroller.Controller;
-import lunch.record.servlet.web.frontcontroller.MyView;
+import lunch.record.servlet.web.frontcontroller.ModelView;
+import lunch.record.servlet.web.frontcontroller.RequestInfo;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 public class LunchRecordDeleteController implements Controller {
 
     private LunchRecordRepository repository = LunchRecordRepository.getInstance();
 
     @Override
-    public MyView process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        repository.delete(Integer.valueOf(request.getParameter("id")));
+    public ModelView process(Map<String, RequestInfo> paramMap) throws ServletException, IOException {
+        repository.delete(Integer.valueOf((String) paramMap.get("id").getInfo()));
 
-        return new MyView("/WEB-INF/views/delete.jsp");
+        ModelView mv = new ModelView("delete");
+
+        return mv;
     }
 }

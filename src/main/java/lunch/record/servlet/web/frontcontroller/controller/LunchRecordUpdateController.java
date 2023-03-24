@@ -3,13 +3,11 @@ package lunch.record.servlet.web.frontcontroller.controller;
 import lunch.record.servlet.domain.LunchRecord;
 import lunch.record.servlet.domain.LunchRecordRepository;
 import lunch.record.servlet.web.frontcontroller.Controller;
-import lunch.record.servlet.web.frontcontroller.MyView;
+import lunch.record.servlet.web.frontcontroller.ModelView;
+import lunch.record.servlet.web.frontcontroller.RequestInfo;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -17,29 +15,30 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
 
 public class LunchRecordUpdateController implements Controller {
 
     private LunchRecordRepository repository = LunchRecordRepository.getInstance();
 
     @Override
-    public MyView process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public ModelView process(Map<String, RequestInfo> paramMap) throws ServletException, IOException {
         Blob blob;
 
         try {
-            blob = new SerialBlob(request.getPart("image").getInputStream().readAllBytes());
+            blob = new SerialBlob(((Part) paramMap.get("image").getInfo()).getInputStream().readAllBytes());
         } catch (SQLException e) {
             throw new ServletException(e);
         }
 
         LocalTime now = LocalTime.now();
         LunchRecord lunchRecord = new LunchRecord(
-                Integer.parseInt(request.getParameter("id")),
-                request.getParameter("restaurant"),
-                request.getParameter("menu"),
+                Integer.parseInt((String) paramMap.get("id").getInfo()),
+                (String) paramMap.get("restaurant").getInfo(),
+                (String) paramMap.get("menu").getInfo(),
                 blob,
-                BigDecimal.valueOf(Long.parseLong(request.getParameter("price"))),
-                Float.parseFloat(request.getParameter("grade")),
+                BigDecimal.valueOf(Long.parseLong((String) paramMap.get("price").getInfo())),
+                Float.parseFloat((String) paramMap.get("grade").getInfo()),
                 now,
                 now
         );
@@ -59,11 +58,12 @@ public class LunchRecordUpdateController implements Controller {
                 lunchRecord.getMenu()
         );
 
-        LunchRecord updatedLunchRecord = repository.findById(Long.valueOf(request.getParameter("id")));
+        LunchRecord updatedLunchRecord = repository.findById(Long.valueOf((String) paramMap.get("id").getInfo()));
         // Model에 데이터를 담아서 보관한다.
-        request.setAttribute("lunchRecord", updatedLunchRecord);
+        ModelView mv = new ModelView("update");
+        mv.getModel().put("lunchRecord", updatedLunchRecord);
 
-        return new MyView("/WEB-INF/views/update.jsp");
+        return mv;
     }
 
     private Float getAverageGrade(LunchRecord lunchRecord) {

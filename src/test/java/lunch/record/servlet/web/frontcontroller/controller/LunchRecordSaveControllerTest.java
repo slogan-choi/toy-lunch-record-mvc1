@@ -3,7 +3,9 @@ package lunch.record.servlet.web.frontcontroller.controller;
 import lombok.extern.slf4j.Slf4j;
 import lunch.record.servlet.domain.LunchRecord;
 import lunch.record.servlet.domain.LunchRecordRepository;
+import lunch.record.servlet.web.frontcontroller.ModelView;
 import lunch.record.servlet.web.frontcontroller.MyView;
+import lunch.record.servlet.web.frontcontroller.RequestInfo;
 import lunch.record.util.Utils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,6 +20,8 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockPart;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -25,10 +29,11 @@ import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
@@ -59,8 +64,8 @@ class LunchRecordSaveControllerTest {
     void checkViewPath() throws ServletException, IOException {
         // given
         // when
-        MyView myView = controller.process(request, response);
-        myView.render(request, response);
+        ModelView mv = controller.process(createParamMap());
+        viewResolver(mv.getViewName()).render(mv.getModel(), request, response);
 
         // then
         assertThat(response.getForwardedUrl()).isEqualTo("/WEB-INF/views/save-result.jsp");
@@ -71,7 +76,8 @@ class LunchRecordSaveControllerTest {
     void checkRequestAttribute() throws ServletException, IOException {
         // given
         // when
-        controller.process(request, response);
+        ModelView mv = controller.process(createParamMap());
+        viewResolver(mv.getViewName()).render(mv.getModel(), request, response);
 
         // then
         LunchRecord lunchRecord = (LunchRecord) request.getAttribute("lunchRecord");
@@ -122,5 +128,35 @@ class LunchRecordSaveControllerTest {
         return Stream.of(
             Arguments.arguments(saveLunchRecord())
         );
+    }
+
+    private MyView viewResolver(String viewName) {
+        return new MyView("/WEB-INF/views/" + viewName + ".jsp");
+    }
+
+    private Map<String, RequestInfo> createParamMap() throws ServletException, IOException {
+        Map<String, RequestInfo> paramMap = new ConcurrentHashMap<>();
+
+        request.getParameterNames().asIterator()
+                .forEachRemaining(paramName -> {
+                    setParameter(request, paramMap, paramName);
+                });
+
+        for (Part part : request.getParts()) {
+            setPart(request, paramMap, part.getName());
+        }
+        return paramMap;
+    }
+
+    private void setPart(HttpServletRequest request, Map<String, RequestInfo> paramMap, String name) throws ServletException, IOException {
+        RequestInfo<Part> requestInfo = new RequestInfo<>();
+        requestInfo.setInfo(request.getPart(name));
+        paramMap.put(name, requestInfo);
+    }
+
+    private void setParameter(HttpServletRequest request, Map<String, RequestInfo> paramMap, String paramName) {
+        RequestInfo<String> requestInfo = new RequestInfo<>();
+        requestInfo.setInfo(request.getParameter(paramName));
+        paramMap.put(paramName, requestInfo);
     }
 }

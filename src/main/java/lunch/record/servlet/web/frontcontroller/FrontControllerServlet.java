@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -46,7 +47,49 @@ public class FrontControllerServlet extends HttpServlet {
             return;
         }
 
-        MyView view = controller.process(request, response);
-        view.render(request, response);
+        Map<String, RequestInfo> paramMap = createParamMap(request);
+        ModelView mv = controller.process(paramMap);
+
+        String viewName = mv.getViewName();
+        MyView view = viewResolver(viewName);
+        view.render(mv.getModel(), request, response);
     }
+
+    private MyView viewResolver(String viewName) {
+        return new MyView("/WEB-INF/views/" + viewName + ".jsp");
+    }
+
+    private Map<String, RequestInfo> createParamMap(HttpServletRequest request) throws ServletException, IOException {
+        Map<String, RequestInfo> paramMap = new ConcurrentHashMap<>();
+
+        request.getParameterNames().asIterator()
+                .forEachRemaining(paramName -> {
+                    setParameter(request, paramMap, paramName);
+                });
+
+        String contentType = request.getContentType();
+        if (contentType != null) {
+            if (contentType.contains("multipart/")) {
+                for (Part part : request.getParts()) {
+                    if (part.getContentType() != null) {
+                        setPart(request, paramMap, part.getName());
+                    }
+                }
+            }
+        }
+        return paramMap;
+    }
+
+    private void setPart(HttpServletRequest request, Map<String, RequestInfo> paramMap, String name) throws ServletException, IOException {
+        RequestInfo<Part> requestInfo = new RequestInfo<>();
+        requestInfo.setInfo(request.getPart(name));
+        paramMap.put(name, requestInfo);
+    }
+
+    private void setParameter(HttpServletRequest request, Map<String, RequestInfo> paramMap, String paramName) {
+        RequestInfo<String> requestInfo = new RequestInfo<>();
+        requestInfo.setInfo(request.getParameter(paramName));
+        paramMap.put(paramName, requestInfo);
+    }
+
 }
