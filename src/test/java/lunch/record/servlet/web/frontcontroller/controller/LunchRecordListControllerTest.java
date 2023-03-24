@@ -3,10 +3,15 @@ package lunch.record.servlet.web.frontcontroller.controller;
 import lombok.extern.slf4j.Slf4j;
 import lunch.record.servlet.domain.LunchRecord;
 import lunch.record.servlet.domain.LunchRecordRepository;
+import lunch.record.servlet.web.frontcontroller.MyView;
 import lunch.record.util.Utils;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpMethod;
@@ -22,6 +27,7 @@ import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,22 +37,23 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @SpringBootTest(classes = LunchRecordListController.class)
 class LunchRecordListControllerTest {
 
-    MockHttpServletRequest request;
-    MockHttpServletResponse response;
-
-    LunchRecordRepository repository = LunchRecordRepository.getInstance();
+    private static MockHttpServletRequest request = new MockHttpServletRequest();
+    private static MockHttpServletResponse response = new MockHttpServletResponse();
+    private static LunchRecordRepository repository = LunchRecordRepository.getInstance();
 
     @Autowired
     LunchRecordListController controller;
 
     @BeforeEach
     void before() {
-        request = new MockHttpServletRequest();
         request.setMethod(HttpMethod.GET.name());
         request.setRequestURI("/front-controller/lunchRecords");
         request.setContentType(APPLICATION_JSON_VALUE);
+    }
 
-        response = new MockHttpServletResponse();
+    @AfterEach
+    void after() {
+        repository.deleteAll();
     }
 
     @Test
@@ -54,16 +61,31 @@ class LunchRecordListControllerTest {
     void checkViewPath() throws ServletException, IOException {
         // given
         // when
-        controller.process(request, response);
+        MyView myView = controller.process(request, response);
+        myView.render(request, response);
 
         // then
         assertThat(response.getForwardedUrl()).isEqualTo("/WEB-INF/views/lunchRecords.jsp");
     }
 
-    @Test
-    @DisplayName("Attribute 확인")
-    void checkRequestAttribute() throws SQLException, ServletException, IOException {
+    @ParameterizedTest(name = "Attribute 확인")
+    @MethodSource("save")
+    void checkRequestAttribute() throws ServletException, IOException {
         // given
+        // when
+        controller.process(request, response);
+
+        // then
+        assertThat(request.getAttribute("lunchRecords"))
+                .usingRecursiveComparison()
+                .ignoringFields("averageGrade")
+                .ignoringFields("updateAt")
+                .ignoringFields("createAt")
+                .isEqualTo(repository.findAll());
+
+    }
+
+    private static LunchRecord saveLunchRecord() throws SQLException {
         String restaurant = "test";
         String menu = "test";
         int maxId = 0;
@@ -95,19 +117,12 @@ class LunchRecordListControllerTest {
                 now,
                 now
         );
+        return lunchRecord;
+    }
 
-        repository.save(lunchRecord);
-
-        // when
-        controller.process(request, response);
-
-        // then
-        assertThat(request.getAttribute("lunchRecords"))
-                .usingRecursiveComparison()
-                .ignoringFields("averageGrade")
-                .ignoringFields("updateAt")
-                .ignoringFields("createAt")
-                .isEqualTo(repository.findAll());
-
+    static Stream<Arguments> save() throws SQLException {
+        return Stream.of(
+                Arguments.arguments(saveLunchRecord())
+        );
     }
 }

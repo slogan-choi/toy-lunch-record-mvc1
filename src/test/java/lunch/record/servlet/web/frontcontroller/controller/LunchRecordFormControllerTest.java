@@ -2,13 +2,13 @@ package lunch.record.servlet.web.frontcontroller.controller;
 
 import lombok.extern.slf4j.Slf4j;
 
+import lunch.record.servlet.web.frontcontroller.MyView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
@@ -17,6 +17,7 @@ import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
 @SpringBootTest(classes = LunchRecordFormController.class)
@@ -31,9 +32,9 @@ class LunchRecordFormControllerTest {
     @BeforeEach
     void before() {
         request = new MockHttpServletRequest();
-        request.setMethod(HttpMethod.POST.name());
-        request.setRequestURI("/front-controller/lunchRecord/save");
-        request.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        request.setMethod(HttpMethod.GET.name());
+        request.setRequestURI("/front-controller/lunchRecord/new-form");
+        request.setContentType(APPLICATION_JSON_VALUE);
 
         response = new MockHttpServletResponse();
     }
@@ -43,7 +44,8 @@ class LunchRecordFormControllerTest {
     void checkViewPath() throws ServletException, IOException {
         // given
         // when
-        controller.process(request, response);
+        MyView myView = controller.process(request, response);
+        myView.render(request, response);
 
         // then
         assertThat(response.getForwardedUrl()).isEqualTo("/WEB-INF/views/new-form.jsp");

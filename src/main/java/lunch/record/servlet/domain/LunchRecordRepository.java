@@ -4,14 +4,14 @@ import java.math.BigDecimal;
 import java.sql.Blob;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class LunchRecordRepository {
 
-    private static Map<Long, LunchRecord> store = new HashMap<>();
+    private static Map<Long, LunchRecord> store = new ConcurrentHashMap<>();
     private static long sequence = 0L;
 
     private static final LunchRecordRepository instance = new LunchRecordRepository();
