@@ -24,7 +24,7 @@ public class LunchRecordSaveController implements Controller {
     private LunchRecordRepository repository = LunchRecordRepository.getInstance();
 
     @Override
-    public ModelView process(Map<String, RequestInfo> paramMap) throws ServletException, IOException {
+    public String process(Map<String, RequestInfo> paramMap, Map<String, Object> model) throws ServletException, IOException {
         Blob blob;
 
         try {
@@ -56,10 +56,9 @@ public class LunchRecordSaveController implements Controller {
         LunchRecord savedLunchRecord = repository.findById((long) maxId);
 
         // Model에 데이터를 보관한다.
-        ModelView mv = new ModelView("save-result");
-        mv.getModel().put("lunchRecord", savedLunchRecord);
+        model.put("lunchRecord", savedLunchRecord);
 
-        return mv;
+        return "save-result";
     }
 
     private Float getAverageGrade(LunchRecord lunchRecord) {

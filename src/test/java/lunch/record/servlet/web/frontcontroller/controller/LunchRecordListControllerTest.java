@@ -67,8 +67,10 @@ class LunchRecordListControllerTest {
     void checkViewPath() throws ServletException, IOException {
         // given
         // when
-        ModelView mv = controller.process(createParamMap());
-        viewResolver(mv.getViewName()).render(mv.getModel(), request, response);
+        Map<String, Object> model = new ConcurrentHashMap<>();
+        String viewName = controller.process(createParamMap(), model);
+        MyView view = viewResolver(viewName);
+        view.render(model, request, response);
 
         // then
         assertThat(response.getForwardedUrl()).isEqualTo("/WEB-INF/views/lunchRecords.jsp");
@@ -79,8 +81,10 @@ class LunchRecordListControllerTest {
     void checkRequestAttribute() throws ServletException, IOException {
         // given
         // when
-        ModelView mv = controller.process(createParamMap());
-        viewResolver(mv.getViewName()).render(mv.getModel(), request, response);
+        Map<String, Object> model = new ConcurrentHashMap<>();
+        String viewName = controller.process(createParamMap(), model);
+        MyView view = viewResolver(viewName);
+        view.render(model, request, response);
 
         // then
         assertThat(request.getAttribute("lunchRecords"))

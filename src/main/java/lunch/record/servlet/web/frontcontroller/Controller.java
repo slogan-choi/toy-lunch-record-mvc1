@@ -6,5 +6,5 @@ import java.util.Map;
 
 public interface Controller {
 
-    ModelView process(Map<String, RequestInfo> paramMap) throws ServletException, IOException;
+    String process(Map<String, RequestInfo> paramMap, Map<String, Object> model) throws ServletException, IOException;
 }

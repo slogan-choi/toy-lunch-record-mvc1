@@ -11,7 +11,7 @@ import java.util.Map;
 public class LunchRecordFormController implements Controller {
 
     @Override
-    public ModelView process(Map<String, RequestInfo> paramMap) throws ServletException, IOException {
-        return new ModelView("new-form");
+    public String process(Map<String, RequestInfo> paramMap, Map<String, Object> model) throws ServletException, IOException {
+        return "new-form";
     }
 }

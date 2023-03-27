@@ -15,13 +15,12 @@ public class LunchRecordUpdateFormController implements Controller {
     private LunchRecordRepository repository = LunchRecordRepository.getInstance();
 
     @Override
-    public ModelView process(Map<String, RequestInfo> paramMap) throws ServletException, IOException {
+    public String process(Map<String, RequestInfo> paramMap, Map<String, Object> model) throws ServletException, IOException {
         LunchRecord lunchRecord = repository.findById(Long.valueOf((String) paramMap.get("id").getInfo()));
 
         // Model에 데이터를 담아서 보관한다.
-        ModelView mv = new ModelView("update-form");
-        mv.getModel().put("lunchRecord", lunchRecord);
+        model.put("lunchRecord", lunchRecord);
 
-        return mv;
+        return "update-form";
     }
 }

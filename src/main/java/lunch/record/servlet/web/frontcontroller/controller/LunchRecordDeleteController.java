@@ -14,11 +14,9 @@ public class LunchRecordDeleteController implements Controller {
     private LunchRecordRepository repository = LunchRecordRepository.getInstance();
 
     @Override
-    public ModelView process(Map<String, RequestInfo> paramMap) throws ServletException, IOException {
+    public String process(Map<String, RequestInfo> paramMap, Map<String, Object> model) throws ServletException, IOException {
         repository.delete(Integer.valueOf((String) paramMap.get("id").getInfo()));
 
-        ModelView mv = new ModelView("delete");
-
-        return mv;
+        return "delete";
     }
 }

@@ -16,12 +16,10 @@ public class LunchRecordListController implements Controller {
     private LunchRecordRepository repository = LunchRecordRepository.getInstance();
 
     @Override
-    public ModelView process(Map<String, RequestInfo> paramMap) throws ServletException, IOException {
+    public String process(Map<String, RequestInfo> paramMap, Map<String, Object> model) throws ServletException, IOException {
         List<LunchRecord> lunchRecords = repository.findAll();
+        model.put("lunchRecords", lunchRecords);
 
-        ModelView mv = new ModelView("lunchRecords");
-        mv.getModel().put("lunchRecords", lunchRecords);
-
-        return mv;
+        return "lunchRecords";
     }
 }
