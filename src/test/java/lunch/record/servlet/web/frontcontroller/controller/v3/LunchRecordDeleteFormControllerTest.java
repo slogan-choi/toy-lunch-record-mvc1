@@ -1,4 +1,4 @@
-package lunch.record.servlet.web.frontcontroller.controller;
+package lunch.record.servlet.web.frontcontroller.controller.v3;
 
 import lombok.extern.slf4j.Slf4j;
 import lunch.record.servlet.domain.LunchRecord;
@@ -37,20 +37,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
-@SpringBootTest(classes = LunchRecordDeleteController.class)
-class LunchRecordDeleteControllerTest {
+@SpringBootTest(classes = LunchRecordDeleteFormController.class)
+class LunchRecordDeleteFormControllerTest {
 
     private static MockHttpServletRequest request = new MockHttpServletRequest();
     private static MockHttpServletResponse response = new MockHttpServletResponse();
     private static LunchRecordRepository repository = LunchRecordRepository.getInstance();
 
     @Autowired
-    LunchRecordDeleteController controller;
+    LunchRecordDeleteFormController controller;
 
     @BeforeEach
     void before() {
         request.setMethod(HttpMethod.POST.name());
-        request.setRequestURI("/front-controller/lunchRecord/delete");
+        request.setRequestURI("/front-controller/v3/lunchRecord/delete-form");
         request.setContentType(APPLICATION_JSON_VALUE);
     }
 
@@ -60,12 +60,10 @@ class LunchRecordDeleteControllerTest {
     void checkViewPath() throws ServletException, IOException {
         // given
         // when
-        Map<String, Object> model = new ConcurrentHashMap<>();
-        String viewName = controller.process(createParamMap(), model);
-        MyView view = viewResolver(viewName);
-        view.render(model, request, response);
+        ModelView mv = controller.process(createParamMap());
+        viewResolver(mv.getViewName()).render(mv.getModel(), request, response);
         // then
-        assertThat(response.getForwardedUrl()).isEqualTo("/WEB-INF/views/delete.jsp");
+        assertThat(response.getForwardedUrl()).isEqualTo("/WEB-INF/views/delete-form.jsp");
     }
 
     @ParameterizedTest()
@@ -74,13 +72,17 @@ class LunchRecordDeleteControllerTest {
     void checkRequestAttribute() throws ServletException, IOException {
         // given
         // when
-        Map<String, Object> model = new ConcurrentHashMap<>();
-        String viewName = controller.process(createParamMap(), model);
-        MyView view = viewResolver(viewName);
-        view.render(model, request, response);
+        ModelView mv = controller.process(createParamMap());
+        viewResolver(mv.getViewName()).render(mv.getModel(), request, response);
 
         // then
-        assertThat(repository.findById(Long.valueOf(request.getParameter("id")))).isNull();
+        LunchRecord lunchRecord = (LunchRecord) request.getAttribute("lunchRecord");
+        assertThat(lunchRecord)
+                .usingRecursiveComparison()
+                .ignoringFields("averageGrade")
+                .ignoringFields("updateAt")
+                .ignoringFields("createAt")
+                .isEqualTo(repository.findById(Long.valueOf(lunchRecord.getId())));
     }
 
     private static LunchRecord saveLunchRecord() throws SQLException {

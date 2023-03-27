@@ -1,9 +1,8 @@
-package lunch.record.servlet.web.frontcontroller.controller;
+package lunch.record.servlet.web.frontcontroller.controller.v4;
 
 import lunch.record.servlet.domain.LunchRecord;
 import lunch.record.servlet.domain.LunchRecordRepository;
-import lunch.record.servlet.web.frontcontroller.Controller;
-import lunch.record.servlet.web.frontcontroller.ModelView;
+import lunch.record.servlet.web.frontcontroller.ControllerV4;
 import lunch.record.servlet.web.frontcontroller.RequestInfo;
 
 import javax.servlet.ServletException;
@@ -14,26 +13,25 @@ import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.time.LocalTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-public class LunchRecordUpdateController implements Controller {
+public class LunchRecordSaveController implements ControllerV4 {
 
     private LunchRecordRepository repository = LunchRecordRepository.getInstance();
 
     @Override
     public String process(Map<String, RequestInfo> paramMap, Map<String, Object> model) throws ServletException, IOException {
         Blob blob;
-
         try {
             blob = new SerialBlob(((Part) paramMap.get("image").getInfo()).getInputStream().readAllBytes());
         } catch (SQLException e) {
             throw new ServletException(e);
         }
-
         LocalTime now = LocalTime.now();
+
         LunchRecord lunchRecord = new LunchRecord(
-                Integer.parseInt((String) paramMap.get("id").getInfo()),
                 (String) paramMap.get("restaurant").getInfo(),
                 (String) paramMap.get("menu").getInfo(),
                 blob,
@@ -43,26 +41,20 @@ public class LunchRecordUpdateController implements Controller {
                 now
         );
 
-        repository.update(
-                lunchRecord.getId(),
-                lunchRecord.getRestaurant(),
-                lunchRecord.getMenu(),
-                lunchRecord.getImage(),
-                lunchRecord.getPrice(),
-                lunchRecord.getGrade()
-        );
+        lunchRecord.setAverageGrade(getAverageGrade(lunchRecord));
+        repository.save(lunchRecord);
 
-        repository.updateAverageGradeByRestaurantMenu(
-                getAverageGrade(lunchRecord),
-                lunchRecord.getRestaurant(),
-                lunchRecord.getMenu()
-        );
+        int maxId = repository.findAll().stream()
+                .max(Comparator.comparing(LunchRecord::getId))
+                .orElseThrow()
+                .getId();
 
-        LunchRecord updatedLunchRecord = repository.findById(Long.valueOf((String) paramMap.get("id").getInfo()));
-        // Model에 데이터를 담아서 보관한다.
-        model.put("lunchRecord", updatedLunchRecord);
+        LunchRecord savedLunchRecord = repository.findById((long) maxId);
 
-        return "update";
+        // Model에 데이터를 보관한다.
+        model.put("lunchRecord", savedLunchRecord);
+
+        return "save-result";
     }
 
     private Float getAverageGrade(LunchRecord lunchRecord) {

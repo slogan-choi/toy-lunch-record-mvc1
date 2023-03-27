@@ -1,4 +1,4 @@
-package lunch.record.servlet.web.frontcontroller.controller;
+package lunch.record.servlet.web.frontcontroller.controller.v3;
 
 import lombok.extern.slf4j.Slf4j;
 import lunch.record.servlet.domain.LunchRecord;
@@ -9,8 +9,6 @@ import lunch.record.servlet.web.frontcontroller.RequestInfo;
 import lunch.record.util.Utils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -31,29 +29,28 @@ import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
-@SpringBootTest(classes = LunchRecordListController.class)
-class LunchRecordListControllerTest {
+@SpringBootTest(classes = LunchRecordSaveController.class)
+class LunchRecordSaveControllerTest {
 
     private static MockHttpServletRequest request = new MockHttpServletRequest();
     private static MockHttpServletResponse response = new MockHttpServletResponse();
     private static LunchRecordRepository repository = LunchRecordRepository.getInstance();
 
     @Autowired
-    LunchRecordListController controller;
+    LunchRecordSaveController controller;
 
     @BeforeEach
     void before() {
-        request.setMethod(HttpMethod.GET.name());
-        request.setRequestURI("/front-controller/lunchRecords");
+        request.setMethod(HttpMethod.POST.name());
+        request.setRequestURI("/front-controller/v3/lunchRecord/save");
         request.setContentType(APPLICATION_JSON_VALUE);
     }
 
@@ -62,18 +59,16 @@ class LunchRecordListControllerTest {
         repository.deleteAll();
     }
 
-    @Test
-    @DisplayName("경로 확인")
+    @ParameterizedTest(name = "경로 확인")
+    @MethodSource("save")
     void checkViewPath() throws ServletException, IOException {
         // given
         // when
-        Map<String, Object> model = new ConcurrentHashMap<>();
-        String viewName = controller.process(createParamMap(), model);
-        MyView view = viewResolver(viewName);
-        view.render(model, request, response);
+        ModelView mv = controller.process(createParamMap());
+        viewResolver(mv.getViewName()).render(mv.getModel(), request, response);
 
         // then
-        assertThat(response.getForwardedUrl()).isEqualTo("/WEB-INF/views/lunchRecords.jsp");
+        assertThat(response.getForwardedUrl()).isEqualTo("/WEB-INF/views/save-result.jsp");
     }
 
     @ParameterizedTest(name = "Attribute 확인")
@@ -81,19 +76,17 @@ class LunchRecordListControllerTest {
     void checkRequestAttribute() throws ServletException, IOException {
         // given
         // when
-        Map<String, Object> model = new ConcurrentHashMap<>();
-        String viewName = controller.process(createParamMap(), model);
-        MyView view = viewResolver(viewName);
-        view.render(model, request, response);
+        ModelView mv = controller.process(createParamMap());
+        viewResolver(mv.getViewName()).render(mv.getModel(), request, response);
 
         // then
-        assertThat(request.getAttribute("lunchRecords"))
+        LunchRecord lunchRecord = (LunchRecord) request.getAttribute("lunchRecord");
+        assertThat(lunchRecord)
                 .usingRecursiveComparison()
                 .ignoringFields("averageGrade")
                 .ignoringFields("updateAt")
                 .ignoringFields("createAt")
-                .isEqualTo(repository.findAll());
-
+                .isEqualTo(repository.findById(Long.valueOf(lunchRecord.getId())));
     }
 
     private static LunchRecord saveLunchRecord() throws SQLException {
@@ -133,7 +126,7 @@ class LunchRecordListControllerTest {
 
     static Stream<Arguments> save() throws SQLException {
         return Stream.of(
-                Arguments.arguments(saveLunchRecord())
+            Arguments.arguments(saveLunchRecord())
         );
     }
 

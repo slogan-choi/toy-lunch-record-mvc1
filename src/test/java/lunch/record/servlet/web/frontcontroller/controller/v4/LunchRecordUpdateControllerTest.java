@@ -1,9 +1,8 @@
-package lunch.record.servlet.web.frontcontroller.controller;
+package lunch.record.servlet.web.frontcontroller.controller.v4;
 
 import lombok.extern.slf4j.Slf4j;
 import lunch.record.servlet.domain.LunchRecord;
 import lunch.record.servlet.domain.LunchRecordRepository;
-import lunch.record.servlet.web.frontcontroller.ModelView;
 import lunch.record.servlet.web.frontcontroller.MyView;
 import lunch.record.servlet.web.frontcontroller.RequestInfo;
 import lunch.record.util.Utils;
@@ -49,7 +48,7 @@ class LunchRecordUpdateControllerTest {
     @BeforeEach
     void before() {
         request.setMethod(HttpMethod.POST.name());
-        request.setRequestURI("/front-controller/lunchRecord/update");
+        request.setRequestURI("/front-controller/v4/lunchRecord/update");
         request.setContentType(APPLICATION_JSON_VALUE);
     }
 

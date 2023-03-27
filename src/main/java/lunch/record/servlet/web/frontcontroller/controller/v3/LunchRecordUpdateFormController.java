@@ -1,26 +1,25 @@
-package lunch.record.servlet.web.frontcontroller.controller;
+package lunch.record.servlet.web.frontcontroller.controller.v3;
 
 import lunch.record.servlet.domain.LunchRecord;
 import lunch.record.servlet.domain.LunchRecordRepository;
-import lunch.record.servlet.web.frontcontroller.Controller;
+import lunch.record.servlet.web.frontcontroller.ControllerV3;
 import lunch.record.servlet.web.frontcontroller.ModelView;
 import lunch.record.servlet.web.frontcontroller.RequestInfo;
 
-import javax.servlet.ServletException;
-import java.io.IOException;
 import java.util.Map;
 
-public class LunchRecordDeleteFormController implements Controller {
+public class LunchRecordUpdateFormController implements ControllerV3 {
 
     private LunchRecordRepository repository = LunchRecordRepository.getInstance();
 
     @Override
-    public String process(Map<String, RequestInfo> paramMap, Map<String, Object> model) throws ServletException, IOException {
+    public ModelView process(Map<String, RequestInfo> paramMap) {
         LunchRecord lunchRecord = repository.findById(Long.valueOf((String) paramMap.get("id").getInfo()));
 
         // Model에 데이터를 담아서 보관한다.
-        model.put("lunchRecord", lunchRecord);
+        ModelView mv = new ModelView("update-form");
+        mv.getModel().put("lunchRecord", lunchRecord);
 
-        return "delete-form";
+        return mv;
     }
 }

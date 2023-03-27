@@ -1,10 +1,10 @@
-package lunch.record.servlet.web.frontcontroller.controller;
+package lunch.record.servlet.web.frontcontroller.controller.v4;
 
 import lombok.extern.slf4j.Slf4j;
 
-import lunch.record.servlet.web.frontcontroller.ModelView;
 import lunch.record.servlet.web.frontcontroller.MyView;
 import lunch.record.servlet.web.frontcontroller.RequestInfo;
+import lunch.record.servlet.web.frontcontroller.controller.v4.LunchRecordFormController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
@@ -38,7 +37,7 @@ class LunchRecordFormControllerTest {
     @BeforeEach
     void before() {
         request.setMethod(HttpMethod.GET.name());
-        request.setRequestURI("/front-controller/lunchRecord/new-form");
+        request.setRequestURI("/front-controller/v4/lunchRecord/new-form");
         request.setContentType(APPLICATION_JSON_VALUE);
     }
 

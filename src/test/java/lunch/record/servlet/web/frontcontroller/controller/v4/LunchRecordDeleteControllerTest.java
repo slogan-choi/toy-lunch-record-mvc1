@@ -1,14 +1,14 @@
-package lunch.record.servlet.web.frontcontroller.controller;
+package lunch.record.servlet.web.frontcontroller.controller.v4;
 
 import lombok.extern.slf4j.Slf4j;
 import lunch.record.servlet.domain.LunchRecord;
 import lunch.record.servlet.domain.LunchRecordRepository;
-import lunch.record.servlet.web.frontcontroller.ModelView;
 import lunch.record.servlet.web.frontcontroller.MyView;
 import lunch.record.servlet.web.frontcontroller.RequestInfo;
+import lunch.record.servlet.web.frontcontroller.controller.v4.LunchRecordDeleteController;
 import lunch.record.util.Utils;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -29,51 +29,48 @@ import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
-@SpringBootTest(classes = LunchRecordSaveController.class)
-class LunchRecordSaveControllerTest {
+@SpringBootTest(classes = LunchRecordDeleteController.class)
+class LunchRecordDeleteControllerTest {
 
     private static MockHttpServletRequest request = new MockHttpServletRequest();
     private static MockHttpServletResponse response = new MockHttpServletResponse();
     private static LunchRecordRepository repository = LunchRecordRepository.getInstance();
 
     @Autowired
-    LunchRecordSaveController controller;
+    LunchRecordDeleteController controller;
 
     @BeforeEach
     void before() {
         request.setMethod(HttpMethod.POST.name());
-        request.setRequestURI("/front-controller/lunchRecord/save");
+        request.setRequestURI("/front-controller/v4/lunchRecord/delete");
         request.setContentType(APPLICATION_JSON_VALUE);
     }
 
-    @AfterEach
-    void after() {
-        repository.deleteAll();
-    }
-
-    @ParameterizedTest(name = "경로 확인")
+    @ParameterizedTest()
     @MethodSource("save")
+    @DisplayName("경로 확인")
     void checkViewPath() throws ServletException, IOException {
         // given
         // when
-        ConcurrentHashMap<String, Object> model = new ConcurrentHashMap<>();
+        Map<String, Object> model = new ConcurrentHashMap<>();
         String viewName = controller.process(createParamMap(), model);
-        viewResolver(viewName).render(model, request, response);
-
+        MyView view = viewResolver(viewName);
+        view.render(model, request, response);
         // then
-        assertThat(response.getForwardedUrl()).isEqualTo("/WEB-INF/views/save-result.jsp");
+        assertThat(response.getForwardedUrl()).isEqualTo("/WEB-INF/views/delete.jsp");
     }
 
-    @ParameterizedTest(name = "Attribute 확인")
+    @ParameterizedTest()
     @MethodSource("save")
+    @DisplayName("Attribute 확인")
     void checkRequestAttribute() throws ServletException, IOException {
         // given
         // when
@@ -83,13 +80,7 @@ class LunchRecordSaveControllerTest {
         view.render(model, request, response);
 
         // then
-        LunchRecord lunchRecord = (LunchRecord) request.getAttribute("lunchRecord");
-        assertThat(lunchRecord)
-                .usingRecursiveComparison()
-                .ignoringFields("averageGrade")
-                .ignoringFields("updateAt")
-                .ignoringFields("createAt")
-                .isEqualTo(repository.findById(Long.valueOf(lunchRecord.getId())));
+        assertThat(repository.findById(Long.valueOf(request.getParameter("id")))).isNull();
     }
 
     private static LunchRecord saveLunchRecord() throws SQLException {
@@ -124,12 +115,13 @@ class LunchRecordSaveControllerTest {
                 now,
                 now
         );
+        repository.save(lunchRecord);
         return lunchRecord;
     }
 
     static Stream<Arguments> save() throws SQLException {
         return Stream.of(
-            Arguments.arguments(saveLunchRecord())
+                Arguments.arguments(saveLunchRecord())
         );
     }
 

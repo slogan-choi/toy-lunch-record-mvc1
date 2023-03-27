@@ -1,4 +1,4 @@
-package lunch.record.servlet.web.frontcontroller.controller;
+package lunch.record.servlet.web.frontcontroller.controller.v3;
 
 import lombok.extern.slf4j.Slf4j;
 import lunch.record.servlet.domain.LunchRecord;
@@ -8,7 +8,6 @@ import lunch.record.servlet.web.frontcontroller.MyView;
 import lunch.record.servlet.web.frontcontroller.RequestInfo;
 import lunch.record.util.Utils;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -37,47 +36,41 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
-@SpringBootTest(classes = LunchRecordDeleteFormController.class)
-class LunchRecordDeleteFormControllerTest {
+@SpringBootTest(classes = LunchRecordUpdateController.class)
+class LunchRecordUpdateControllerTest {
 
     private static MockHttpServletRequest request = new MockHttpServletRequest();
     private static MockHttpServletResponse response = new MockHttpServletResponse();
     private static LunchRecordRepository repository = LunchRecordRepository.getInstance();
 
     @Autowired
-    LunchRecordDeleteFormController controller;
+    LunchRecordUpdateController controller;
 
     @BeforeEach
     void before() {
         request.setMethod(HttpMethod.POST.name());
-        request.setRequestURI("/front-controller/lunchRecord/delete-form");
+        request.setRequestURI("/front-controller/v3/lunchRecord/update");
         request.setContentType(APPLICATION_JSON_VALUE);
     }
 
-    @ParameterizedTest()
+    @ParameterizedTest(name = "경로 확인")
     @MethodSource("save")
-    @DisplayName("경로 확인")
     void checkViewPath() throws ServletException, IOException {
         // given
         // when
-        Map<String, Object> model = new ConcurrentHashMap<>();
-        String viewName = controller.process(createParamMap(), model);
-        MyView view = viewResolver(viewName);
-        view.render(model, request, response);
+        ModelView mv = controller.process(createParamMap());
+        viewResolver(mv.getViewName()).render(mv.getModel(), request, response);
         // then
-        assertThat(response.getForwardedUrl()).isEqualTo("/WEB-INF/views/delete-form.jsp");
+        assertThat(response.getForwardedUrl()).isEqualTo("/WEB-INF/views/update.jsp");
     }
 
-    @ParameterizedTest()
+    @ParameterizedTest(name = "Attribute 확인")
     @MethodSource("save")
-    @DisplayName("Attribute 확인")
     void checkRequestAttribute() throws ServletException, IOException {
         // given
         // when
-        Map<String, Object> model = new ConcurrentHashMap<>();
-        String viewName = controller.process(createParamMap(), model);
-        MyView view = viewResolver(viewName);
-        view.render(model, request, response);
+        ModelView mv = controller.process(createParamMap());
+        viewResolver(mv.getViewName()).render(mv.getModel(), request, response);
 
         // then
         LunchRecord lunchRecord = (LunchRecord) request.getAttribute("lunchRecord");

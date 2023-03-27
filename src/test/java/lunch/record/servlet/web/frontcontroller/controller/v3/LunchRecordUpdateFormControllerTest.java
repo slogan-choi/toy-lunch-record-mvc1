@@ -1,4 +1,4 @@
-package lunch.record.servlet.web.frontcontroller.controller;
+package lunch.record.servlet.web.frontcontroller.controller.v3;
 
 import lombok.extern.slf4j.Slf4j;
 import lunch.record.servlet.domain.LunchRecord;
@@ -50,7 +50,7 @@ class LunchRecordUpdateFormControllerTest {
     @BeforeEach
     void before() {
         request.setMethod(HttpMethod.POST.name());
-        request.setRequestURI("/front-controller/lunchRecord/update-form");
+        request.setRequestURI("/front-controller/v3/lunchRecord/update-form");
         request.setContentType(APPLICATION_JSON_VALUE);
     }
 
@@ -59,10 +59,8 @@ class LunchRecordUpdateFormControllerTest {
     void checkViewPath() throws ServletException, IOException {
         // given
         // when
-        Map<String, Object> model = new ConcurrentHashMap<>();
-        String viewName = controller.process(createParamMap(), model);
-        MyView view = viewResolver(viewName);
-        view.render(model, request, response);
+        ModelView mv = controller.process(createParamMap());
+        viewResolver(mv.getViewName()).render(mv.getModel(), request, response);
         // then
         assertThat(response.getForwardedUrl()).isEqualTo("/WEB-INF/views/update-form.jsp");
     }
@@ -72,10 +70,8 @@ class LunchRecordUpdateFormControllerTest {
     void checkRequestAttribute() throws ServletException, IOException {
         // given
         // when
-        Map<String, Object> model = new ConcurrentHashMap<>();
-        String viewName = controller.process(createParamMap(), model);
-        MyView view = viewResolver(viewName);
-        view.render(model, request, response);
+        ModelView mv = controller.process(createParamMap());
+        viewResolver(mv.getViewName()).render(mv.getModel(), request, response);
 
         // then
         LunchRecord lunchRecord = (LunchRecord) request.getAttribute("lunchRecord");
