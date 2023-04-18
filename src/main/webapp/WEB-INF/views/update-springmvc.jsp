@@ -18,6 +18,6 @@
             <li>updateAt=${lunchRecord.updateAt}</li>
             <li>createAt=${lunchRecord.createAt}</li>
         </ul>
-        <a href="/front-controller/v4/lunchRecords">조회</a>
+        <a href="/springmvc/lunchRecords/v3">조회</a>
     </body>
 </html>

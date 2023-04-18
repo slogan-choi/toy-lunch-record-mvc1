@@ -1,6 +1,5 @@
 <%@ page import="lunch.record.util.Utils" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
     <head>
         <meta charset="UTF-8"/>
@@ -20,8 +19,6 @@
                 <th>createAt</th>
             </thead>
             <tbody>
-
-            <c:forEach var="lunchRecord" items="${lunchRecords}">
                 <tr>
                     <td>${lunchRecord.id}</td>
                     <td>${lunchRecord.restaurant}</td>
@@ -32,11 +29,18 @@
                     <td>${lunchRecord.averageGrade}</td>
                     <td>${lunchRecord.updateAt}</td>
                     <td>${lunchRecord.createAt}</td>
-                    <td> <a href="/front-controller/v4/lunchRecord/update-form?id=${lunchRecord.id}">수정</a> </td>
-                    <td> <a href="/front-controller/v4/lunchRecord/delete-form?id=${lunchRecord.id}">삭제</a> </td>
                 </tr>
-            </c:forEach>
             </tbody>
         </table>
+        <form action="update" method="post" enctype="multipart/form-data">
+            아이디:    <input type="text" name="id" value=${lunchRecord.id} readonly />
+            식당:     <input type="text" name="restaurant" value=${lunchRecord.restaurant} />
+            메뉴:     <input type="text" name="menu" value=${lunchRecord.menu} />
+            이미지:    <input type="file" name="image" />
+            가격:     <input type="number" name="price" value=${lunchRecord.price} />
+            평점:     <input type="number" name="grade" step=\"0.1\" value=${lunchRecord.grade} />
+            평균 평점: <input type="number" name="averageGrade" step=\"0.1\" value=${lunchRecord.averageGrade} readonly />
+            <button type="submit">수정</button>
+        </form>
     </body>
 </html>

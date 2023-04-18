@@ -5,6 +5,6 @@
     </head>
     <body>
         삭제 성공
-        <a href="/front-controller/v4/lunchRecords">조회</a>
+        <a href="/springmvc/lunchRecords/v3">조회</a>
     </body>
 </html>

@@ -6,18 +6,19 @@
         <title>점심 기록</title>
     </head>
     <body>
-        성공
+    성공
         <ul>
             <li>id=${lunchRecord.id}</li>
             <li>restaurant=${lunchRecord.restaurant}</li>
             <li>menu=${lunchRecord.menu}</li>
-            <li>image=<img src="data:image/png;base64,${Utils.getBase64EncodeByte(lunchRecord.image.getBinaryStream().readAllBytes())}"/>
+            <li>image= </li>
+            <li> <img src="data:image/png;base64,${Utils.getBase64EncodeByte(lunchRecord.image.getBinaryStream().readAllBytes())}"/> </li>
             <li>price=${lunchRecord.price}</li>
             <li>grade=${lunchRecord.grade}</li>
             <li>averageGrade=${lunchRecord.averageGrade}</li>
             <li>updateAt=${lunchRecord.updateAt}</li>
             <li>createAt=${lunchRecord.createAt}</li>
         </ul>
-        <a href="/front-controller/v4/lunchRecords">조회</a>
+        <a href="/springmvc/lunchRecords/v3">조회</a>
     </body>
 </html>
