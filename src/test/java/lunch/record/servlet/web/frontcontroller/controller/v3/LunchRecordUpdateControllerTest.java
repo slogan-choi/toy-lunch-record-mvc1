@@ -61,7 +61,7 @@ class LunchRecordUpdateControllerTest {
         ModelView mv = controller.process(createParamMap());
         viewResolver(mv.getViewName()).render(mv.getModel(), request, response);
         // then
-        assertThat(response.getForwardedUrl()).isEqualTo("/WEB-INF/views/update.jsp");
+        assertThat(response.getForwardedUrl()).isEqualTo("/WEB-INF/views/update-result.jsp");
     }
 
     @ParameterizedTest(name = "Attribute 확인")

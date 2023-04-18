@@ -59,7 +59,7 @@ public class LunchRecordSaveController {
         LunchRecord savedLunchRecord = repository.findById((long) maxId);
 
         // ModelAndView에 데이터를 보관한다.
-        ModelAndView modelAndView = new ModelAndView("save-result-springmvc");
+        ModelAndView modelAndView = new ModelAndView("save-result");
         modelAndView.addObject("lunchRecord", savedLunchRecord);
 
         return modelAndView;

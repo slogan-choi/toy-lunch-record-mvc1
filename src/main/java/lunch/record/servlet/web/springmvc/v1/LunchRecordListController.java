@@ -17,7 +17,7 @@ public class LunchRecordListController {
     public ModelAndView lunchRecords() {
         List<LunchRecord> lunchRecords = repository.findAll();
 
-        ModelAndView modelAndView = new ModelAndView("lunchRecords-springmvc");
+        ModelAndView modelAndView = new ModelAndView("lunchRecords");
         modelAndView.addObject("lunchRecords", lunchRecords);
         return modelAndView;
     }

@@ -64,7 +64,7 @@ public class LunchRecordUpdateController {
 
         LunchRecord updatedLunchRecord = repository.findById(Long.valueOf((String) paramMap.get("id").getInfo()));
         // ModelAndView에 데이터를 담아서 보관한다.
-        ModelAndView modelAndView = new ModelAndView("update-springmvc");
+        ModelAndView modelAndView = new ModelAndView("update-result");
         modelAndView.addObject("lunchRecord", updatedLunchRecord);
 
         return modelAndView;

@@ -60,7 +60,7 @@ public class LunchRecordUpdateController implements ControllerV4 {
         // Model에 데이터를 담아서 보관한다.
         model.put("lunchRecord", updatedLunchRecord);
 
-        return "update";
+        return "update-result";
     }
 
     private Float getAverageGrade(LunchRecord lunchRecord) {

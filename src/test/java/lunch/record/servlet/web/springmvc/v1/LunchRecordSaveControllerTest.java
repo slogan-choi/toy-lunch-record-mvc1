@@ -60,7 +60,7 @@ class LunchRecordSaveControllerTest {
                         .param("price", lunchRecord.getPrice().toString())
                         .param("grade", lunchRecord.getGrade().toString())
                 )
-                .andExpect(MockMvcResultMatchers.forwardedUrl("save-result-springmvc"))
+                .andExpect(MockMvcResultMatchers.forwardedUrl("save-result"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("lunchRecord"))
                 .andReturn();
 

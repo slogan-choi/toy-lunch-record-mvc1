@@ -17,14 +17,13 @@ public class LunchRecordUpdateFormController {
 
     private LunchRecordRepository repository = LunchRecordRepository.getInstance();
 
-    @RequestMapping("/springmvc/lunchRecord/v1/update-form")
+    @RequestMapping("/springmvc/lunchRecord/v1/updateform")
     public ModelAndView updateForm(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("LunchRecordUpdateFormController.updateForm");
         Map<String, RequestInfo> paramMap = createParamMap(request);
         LunchRecord lunchRecord = repository.findById(Long.valueOf((String) paramMap.get("id").getInfo()));
 
         // ModelAndView에 데이터를 담아서 보관한다.
-        ModelAndView modelAndView = new ModelAndView("update-form-springmvc");
+        ModelAndView modelAndView = new ModelAndView("update-form");
         modelAndView.addObject("lunchRecord", lunchRecord);
 
         return modelAndView;

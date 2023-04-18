@@ -59,7 +59,7 @@ public class LunchRecordUpdateController implements ControllerV3 {
 
         LunchRecord updatedLunchRecord = repository.findById(Long.valueOf((String) paramMap.get("id").getInfo()));
         // Model에 데이터를 담아서 보관한다.
-        ModelView mv = new ModelView("update");
+        ModelView mv = new ModelView("update-result");
         mv.getModel().put("lunchRecord", updatedLunchRecord);
 
         return mv;

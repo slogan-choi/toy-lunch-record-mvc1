@@ -32,7 +32,7 @@
                 </tr>
             </tbody>
         </table>
-        <form action="delete" method="delete">
+        <form action="delete" method="post">
             <input type="hidden" name="id" value=${lunchRecord.id} readonly />
             <button type="submit">삭제</button>
         </form>

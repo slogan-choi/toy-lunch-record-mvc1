@@ -21,7 +21,7 @@ class LunchRecordFormControllerTest {
 
     @Test
     void newForm() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/springmvc/lunchRecord/v1/new-form"))
-                .andExpect(MockMvcResultMatchers.forwardedUrl("new-form-springmvc"));
+        mockMvc.perform(MockMvcRequestBuilders.get("/springmvc/lunchRecord/v1/newform"))
+                .andExpect(MockMvcResultMatchers.forwardedUrl("new-form"));
     }
 }

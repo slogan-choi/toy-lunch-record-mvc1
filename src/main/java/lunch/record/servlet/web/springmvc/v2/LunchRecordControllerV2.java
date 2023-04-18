@@ -27,16 +27,16 @@ public class LunchRecordControllerV2 {
 
     private LunchRecordRepository repository = LunchRecordRepository.getInstance();
 
-    @RequestMapping("/lunchRecord/v2/new-form")
+    @RequestMapping("/lunchRecord/v2/newform")
     public ModelAndView newForm() {
-        return new ModelAndView("new-form-springmvc");
+        return new ModelAndView("new-form");
     }
 
     @RequestMapping("/lunchRecords/v2")
     public ModelAndView lunchRecords() {
         List<LunchRecord> lunchRecords = repository.findAll();
 
-        ModelAndView modelAndView = new ModelAndView("lunchRecords-springmvc");
+        ModelAndView modelAndView = new ModelAndView("lunchRecords");
         modelAndView.addObject("lunchRecords", lunchRecords);
         return modelAndView;
     }
@@ -73,7 +73,7 @@ public class LunchRecordControllerV2 {
         LunchRecord savedLunchRecord = repository.findById((long) maxId);
 
         // ModelAndView에 데이터를 보관한다.
-        ModelAndView modelAndView = new ModelAndView("save-result-springmvc");
+        ModelAndView modelAndView = new ModelAndView("save-result");
         modelAndView.addObject("lunchRecord", savedLunchRecord);
 
         return modelAndView;
@@ -118,19 +118,19 @@ public class LunchRecordControllerV2 {
 
         LunchRecord updatedLunchRecord = repository.findById(Long.valueOf((String) paramMap.get("id").getInfo()));
         // Model에 데이터를 담아서 보관한다.
-        ModelAndView modelAndView = new ModelAndView("update-springmvc");
+        ModelAndView modelAndView = new ModelAndView("update-result");
         modelAndView.addObject("lunchRecord", updatedLunchRecord);
 
         return modelAndView;
     }
 
-    @RequestMapping("/lunchRecord/v2/update-form")
+    @RequestMapping("/lunchRecord/v2/updateform")
     public ModelAndView updateForm(HttpServletRequest request, HttpServletResponse response) {
         Map<String, RequestInfo> paramMap = createParamMap(request);
         LunchRecord lunchRecord = repository.findById(Long.valueOf((String) paramMap.get("id").getInfo()));
 
         // ModelAndView에 데이터를 담아서 보관한다.
-        ModelAndView modelAndView = new ModelAndView("update-form-springmvc");
+        ModelAndView modelAndView = new ModelAndView("update-form");
         modelAndView.addObject("lunchRecord", lunchRecord);
 
         return modelAndView;
@@ -141,16 +141,16 @@ public class LunchRecordControllerV2 {
         Map<String, RequestInfo> paramMap = createParamMap(request);
         repository.delete(Integer.valueOf((String) paramMap.get("id").getInfo()));
 
-        return new ModelAndView("delete-springmvc");
+        return new ModelAndView("delete-result");
     }
 
-    @RequestMapping("/lunchRecord/v2/delete-form")
+    @RequestMapping("/lunchRecord/v2/deleteform")
     public ModelAndView deleteForm(HttpServletRequest request, HttpServletResponse response) {
         Map<String, RequestInfo> paramMap = createParamMap(request);
         LunchRecord lunchRecord = repository.findById(Long.valueOf((String) paramMap.get("id").getInfo()));
 
         // ModelAndView에 데이터를 담아서 보관한다.
-        ModelAndView modelAndView = new ModelAndView("delete-form-springmvc");
+        ModelAndView modelAndView = new ModelAndView("delete-form");
         modelAndView.addObject("lunchRecord", lunchRecord);
 
         return modelAndView;

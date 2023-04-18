@@ -63,7 +63,7 @@ class LunchRecordDeleteControllerTest {
         ModelView mv = controller.process(createParamMap());
         viewResolver(mv.getViewName()).render(mv.getModel(), request, response);
         // then
-        assertThat(response.getForwardedUrl()).isEqualTo("/WEB-INF/views/delete.jsp");
+        assertThat(response.getForwardedUrl()).isEqualTo("/WEB-INF/views/delete-result.jsp");
     }
 
     @ParameterizedTest()

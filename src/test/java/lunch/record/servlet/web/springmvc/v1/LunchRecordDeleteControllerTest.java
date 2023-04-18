@@ -44,7 +44,7 @@ class LunchRecordDeleteControllerTest {
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/springmvc/lunchRecord/v1/delete")
                         .param("id", String.valueOf(lunchRecord.getId()))
                 )
-                .andExpect(MockMvcResultMatchers.forwardedUrl("delete-springmvc"));
+                .andExpect(MockMvcResultMatchers.forwardedUrl("delete-result"));
     }
 
     private void saveLunchRecord() throws SQLException {

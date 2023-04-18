@@ -19,7 +19,7 @@ public class MvcLunchRecordDeleteServlet extends HttpServlet {
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         repository.delete(Integer.valueOf(request.getParameter("id")));
 
-        String viewPath = "/WEB-INF/views/delete.jsp";
+        String viewPath = "/WEB-INF/views/delete-result.jsp";
         RequestDispatcher dispatcher = request.getRequestDispatcher(viewPath);
         dispatcher.forward(request, response);
     }

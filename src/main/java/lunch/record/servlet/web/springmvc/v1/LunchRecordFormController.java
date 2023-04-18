@@ -7,8 +7,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class LunchRecordFormController {
 
-    @RequestMapping("/springmvc/lunchRecord/v1/new-form")
+    @RequestMapping("/springmvc/lunchRecord/v1/newform")
     public ModelAndView newForm() {
-        return new ModelAndView("new-form-springmvc");
+        return new ModelAndView("new-form");
     }
 }

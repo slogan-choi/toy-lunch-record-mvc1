@@ -53,7 +53,7 @@ class LunchRecordUpdateControllerTest {
                         .param("price", lunchRecord.getPrice().toString())
                         .param("grade", lunchRecord.getGrade().toString())
                 )
-                .andExpect(MockMvcResultMatchers.forwardedUrl("update-springmvc"))
+                .andExpect(MockMvcResultMatchers.forwardedUrl("update-result"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("lunchRecord"))
                 .andReturn();
 

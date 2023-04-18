@@ -45,10 +45,10 @@ class LunchRecordDeleteFormControllerTest {
     @Test
     void deleteForm() throws Exception {
         LunchRecord lunchRecord = repository.findById(Long.valueOf(getId()));
-        MvcResult mvcResult = this.mockMvc.perform(MockMvcRequestBuilders.delete("/springmvc/lunchRecord/v1/delete-form")
+        MvcResult mvcResult = this.mockMvc.perform(MockMvcRequestBuilders.delete("/springmvc/lunchRecord/v1/deleteform")
                         .param("id", String.valueOf(lunchRecord.getId()))
                 )
-                .andExpect(MockMvcResultMatchers.forwardedUrl("delete-form-springmvc"))
+                .andExpect(MockMvcResultMatchers.forwardedUrl("delete-form"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("lunchRecord"))
                 .andReturn();
         ;

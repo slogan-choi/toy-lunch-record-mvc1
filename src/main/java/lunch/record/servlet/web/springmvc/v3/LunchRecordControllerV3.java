@@ -26,9 +26,9 @@ public class LunchRecordControllerV3 {
 
     private LunchRecordRepository repository = LunchRecordRepository.getInstance();
 
-    @GetMapping ("/lunchRecord/v3/new-form")
+    @GetMapping ("/lunchRecord/v3/newform")
     public String newForm() {
-        return "new-form-springmvc";
+        return "new-form";
     }
 
     @GetMapping("/lunchRecords/v3")
@@ -36,7 +36,7 @@ public class LunchRecordControllerV3 {
         List<LunchRecord> lunchRecords = repository.findAll();
 
         model.addAttribute("lunchRecords", lunchRecords);
-        return "lunchRecords-springmvc";
+        return "lunchRecords";
     }
 
     @PostMapping("/lunchRecord/v3/save")
@@ -78,7 +78,7 @@ public class LunchRecordControllerV3 {
 
         // model에 데이터를 보관한다.
         model.addAttribute("lunchRecord", savedLunchRecord);
-        return "save-result-springmvc";
+        return "save-result";
     }
 
     @PostMapping("/lunchRecord/v3/update")
@@ -129,34 +129,34 @@ public class LunchRecordControllerV3 {
         // model에 데이터를 담아서 보관한다.
         model.addAttribute("lunchRecord", updatedLunchRecord);
 
-        return "update-springmvc";
+        return "update-result";
     }
 
-    @GetMapping("/lunchRecord/v3/update-form")
+    @GetMapping("/lunchRecord/v3/updateform")
     public String updateForm(@RequestParam("id") Integer id, Model model) {
         LunchRecord lunchRecord = repository.findById(Long.valueOf(id));
 
         // model에 데이터를 담아서 보관한다.
         model.addAttribute("lunchRecord", lunchRecord);
 
-        return "update-form-springmvc";
+        return "update-form";
     }
 
     @PostMapping("/lunchRecord/v3/delete")
     public String delete(@RequestParam("id") Integer id) throws ServletException, IOException {
         repository.delete(id);
 
-        return "delete-springmvc";
+        return "delete-result";
     }
 
-    @GetMapping("/lunchRecord/v3/delete-form")
+    @GetMapping("/lunchRecord/v3/deleteform")
     public String deleteForm(@RequestParam("id") Integer id, Model model) {
         LunchRecord lunchRecord = repository.findById(Long.valueOf(id));
 
         // model에 데이터를 담아서 보관한다.
         model.addAttribute("lunchRecord", lunchRecord);
 
-        return "delete-form-springmvc";
+        return "delete-form";
     }
 
     private Float getAverageGrade(LunchRecord lunchRecord) {

@@ -14,6 +14,6 @@ public class LunchRecordDeleteController implements ControllerV4 {
     public String process(Map<String, RequestInfo> paramMap, Map<String, Object> model) {
         repository.delete(Integer.valueOf((String) paramMap.get("id").getInfo()));
 
-        return "delete";
+        return "delete-result";
     }
 }

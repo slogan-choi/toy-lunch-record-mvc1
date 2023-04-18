@@ -16,7 +16,7 @@ public class LunchRecordDeleteController implements ControllerV3 {
     @Override
     public ModelView process(Map<String, RequestInfo> paramMap) {
         repository.delete(Integer.valueOf((String) paramMap.get("id").getInfo()));
-        ModelView mv = new ModelView("delete");
+        ModelView mv = new ModelView("delete-result");
         return mv;
     }
 }

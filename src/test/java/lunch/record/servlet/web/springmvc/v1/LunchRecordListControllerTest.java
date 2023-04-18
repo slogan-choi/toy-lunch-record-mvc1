@@ -42,7 +42,7 @@ class LunchRecordListControllerTest {
     @Test
     void lunchRecords() throws Exception {
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/springmvc/lunchRecords/v1"))
-                .andExpect(MockMvcResultMatchers.forwardedUrl("lunchRecords-springmvc"))
+                .andExpect(MockMvcResultMatchers.forwardedUrl("lunchRecords"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("lunchRecords"))
                 .andReturn();
 
