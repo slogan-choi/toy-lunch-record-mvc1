@@ -41,7 +41,7 @@ class LunchRecordDeleteControllerTest {
     @Test
     void delete() throws Exception {
         LunchRecord lunchRecord = repository.findById(Long.valueOf(getId()));
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/springmvc/lunchRecord/v1/delete")
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/springmvc/lunchRecords/v1/delete")
                         .param("id", String.valueOf(lunchRecord.getId()))
                 )
                 .andExpect(MockMvcResultMatchers.forwardedUrl("delete-result"));

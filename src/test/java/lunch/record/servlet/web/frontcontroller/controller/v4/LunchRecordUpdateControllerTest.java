@@ -48,7 +48,7 @@ class LunchRecordUpdateControllerTest {
     @BeforeEach
     void before() {
         request.setMethod(HttpMethod.POST.name());
-        request.setRequestURI("/front-controller/v4/lunchRecord/update");
+        request.setRequestURI("/front-controller/v4/lunchRecords/update");
         request.setContentType(APPLICATION_JSON_VALUE);
     }
 

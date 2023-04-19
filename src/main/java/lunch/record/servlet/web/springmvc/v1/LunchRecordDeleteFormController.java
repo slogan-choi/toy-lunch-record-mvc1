@@ -20,13 +20,13 @@ public class LunchRecordDeleteFormController {
 
     private LunchRecordRepository repository = LunchRecordRepository.getInstance();
 
-    @RequestMapping("/springmvc/lunchRecord/v1/deleteform")
+    @RequestMapping("/springmvc/lunchRecords/v1/delete-form")
     public ModelAndView deleteForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Map<String, RequestInfo> paramMap = createParamMap(request);
         LunchRecord lunchRecord = repository.findById(Long.valueOf((String) paramMap.get("id").getInfo()));
 
         // ModelAndView에 데이터를 담아서 보관한다.
-        ModelAndView modelAndView = new ModelAndView("delete-form");
+        ModelAndView modelAndView = new ModelAndView("form/delete-form");
         modelAndView.addObject("lunchRecord", lunchRecord);
 
         return modelAndView;

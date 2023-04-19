@@ -51,7 +51,7 @@ class LunchRecordSaveControllerTest {
                 now
         );
 
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/springmvc/lunchRecord/v1/save")
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/springmvc/lunchRecords/v1/save")
                         .contentType("application/x-www-form-urlencoded")
                         .param("id", String.valueOf(lunchRecord.getId()))
                         .param("restaurant", lunchRecord.getRestaurant())

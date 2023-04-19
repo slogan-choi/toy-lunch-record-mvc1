@@ -48,7 +48,7 @@ class LunchRecordUpdateFormControllerTest {
     @BeforeEach
     void before() {
         request.setMethod(HttpMethod.POST.name());
-        request.setRequestURI("/front-controller/v4/lunchRecord/update-form");
+        request.setRequestURI("/front-controller/v4/lunchRecords/update-form");
         request.setContentType(APPLICATION_JSON_VALUE);
     }
 
@@ -62,7 +62,7 @@ class LunchRecordUpdateFormControllerTest {
         MyView view = viewResolver(viewName);
         view.render(model, request, response);
         // then
-        assertThat(response.getForwardedUrl()).isEqualTo("/WEB-INF/views/update-form.jsp");
+        assertThat(response.getForwardedUrl()).isEqualTo("/WEB-INF/views/form/update-form.jsp");
     }
 
     @ParameterizedTest(name = "Attribute 확인")

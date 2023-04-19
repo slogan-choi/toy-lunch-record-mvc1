@@ -19,7 +19,7 @@ public class LunchRecordDeleteFormController implements ControllerV3 {
         LunchRecord lunchRecord = repository.findById(Long.valueOf((String) paramMap.get("id").getInfo()));
 
         // Model에 데이터를 담아서 보관한다.
-        ModelView mv = new ModelView("delete-form");
+        ModelView mv = new ModelView("form/delete-form");
         mv.getModel().put("lunchRecord", lunchRecord);
 
         return mv;

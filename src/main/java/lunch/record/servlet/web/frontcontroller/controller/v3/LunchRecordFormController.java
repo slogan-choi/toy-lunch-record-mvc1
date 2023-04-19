@@ -10,6 +10,6 @@ public class LunchRecordFormController implements ControllerV3 {
 
     @Override
     public ModelView process(Map<String, RequestInfo> paramMap) {
-        return new ModelView("new-form");
+        return new ModelView("form/new-form");
     }
 }

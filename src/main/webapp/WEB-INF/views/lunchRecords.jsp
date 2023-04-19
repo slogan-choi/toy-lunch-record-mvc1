@@ -32,8 +32,8 @@
                     <td>${lunchRecord.averageGrade}</td>
                     <td>${lunchRecord.updateAt}</td>
                     <td>${lunchRecord.createAt}</td>
-                    <td> <a href="/springmvc/lunchRecord/v3/updateform?id=${lunchRecord.id}">수정</a> </td>
-                    <td> <a href="/springmvc/lunchRecord/v3/deleteform?id=${lunchRecord.id}">삭제</a> </td>
+                    <td> <a href="/springmvc/lunchRecords/v3/update-form?id=${lunchRecord.id}">수정</a> </td>
+                    <td> <a href="/springmvc/lunchRecords/v3/delete-form?id=${lunchRecord.id}">삭제</a> </td>
                 </tr>
             </c:forEach>
             </tbody>

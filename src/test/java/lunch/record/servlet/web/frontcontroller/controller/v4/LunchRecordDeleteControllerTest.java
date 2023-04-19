@@ -50,7 +50,7 @@ class LunchRecordDeleteControllerTest {
     @BeforeEach
     void before() {
         request.setMethod(HttpMethod.POST.name());
-        request.setRequestURI("/front-controller/v4/lunchRecord/delete");
+        request.setRequestURI("/front-controller/v4/lunchRecords/delete");
         request.setContentType(APPLICATION_JSON_VALUE);
     }
 

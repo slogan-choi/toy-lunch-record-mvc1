@@ -19,7 +19,7 @@ public class LunchRecordDeleteController {
 
     private LunchRecordRepository repository = LunchRecordRepository.getInstance();
 
-    @RequestMapping("/springmvc/lunchRecord/v1/delete")
+    @RequestMapping("/springmvc/lunchRecords/v1/delete")
     public ModelAndView delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Map<String, RequestInfo> paramMap = createParamMap(request);
         repository.delete(Integer.valueOf((String) paramMap.get("id").getInfo()));

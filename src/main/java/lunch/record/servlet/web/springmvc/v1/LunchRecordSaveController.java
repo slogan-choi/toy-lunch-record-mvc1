@@ -26,7 +26,7 @@ public class LunchRecordSaveController {
 
     private LunchRecordRepository repository = LunchRecordRepository.getInstance();
 
-    @RequestMapping("/springmvc/lunchRecord/v1/save")
+    @RequestMapping("/springmvc/lunchRecords/v1/save")
     public ModelAndView save(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Map<String, RequestInfo> paramMap = createParamMap(request);
 

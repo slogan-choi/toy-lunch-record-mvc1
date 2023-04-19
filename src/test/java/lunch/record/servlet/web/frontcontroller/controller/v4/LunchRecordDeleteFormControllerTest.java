@@ -50,7 +50,7 @@ class LunchRecordDeleteFormControllerTest {
     @BeforeEach
     void before() {
         request.setMethod(HttpMethod.POST.name());
-        request.setRequestURI("/front-controller/v4/lunchRecord/delete-form");
+        request.setRequestURI("/front-controller/v4/lunchRecords/delete-form");
         request.setContentType(APPLICATION_JSON_VALUE);
     }
 
@@ -65,7 +65,7 @@ class LunchRecordDeleteFormControllerTest {
         MyView view = viewResolver(viewName);
         view.render(model, request, response);
         // then
-        assertThat(response.getForwardedUrl()).isEqualTo("/WEB-INF/views/delete-form.jsp");
+        assertThat(response.getForwardedUrl()).isEqualTo("/WEB-INF/views/form/delete-form.jsp");
     }
 
     @ParameterizedTest()

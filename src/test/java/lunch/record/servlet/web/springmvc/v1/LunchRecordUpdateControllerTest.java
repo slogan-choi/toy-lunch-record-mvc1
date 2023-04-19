@@ -44,7 +44,7 @@ class LunchRecordUpdateControllerTest {
         LunchRecord lunchRecord = repository.findById(1L);
 
         String restaurant = "testtest";
-        MvcResult mvcResult = this.mockMvc.perform(MockMvcRequestBuilders.post("/springmvc/lunchRecord/v1/update")
+        MvcResult mvcResult = this.mockMvc.perform(MockMvcRequestBuilders.post("/springmvc/lunchRecords/v1/update")
                         .contentType("application/x-www-form-urlencoded")
                         .param("id", String.valueOf(lunchRecord.getId()))
                         .param("restaurant", restaurant)

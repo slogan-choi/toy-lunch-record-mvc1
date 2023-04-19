@@ -25,7 +25,7 @@ public class LunchRecordUpdateController {
 
     private LunchRecordRepository repository = LunchRecordRepository.getInstance();
 
-    @RequestMapping("/springmvc/lunchRecord/v1/update")
+    @RequestMapping("/springmvc/lunchRecords/v1/update")
     public ModelAndView update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Map<String, RequestInfo> paramMap = createParamMap(request);
         Blob blob;

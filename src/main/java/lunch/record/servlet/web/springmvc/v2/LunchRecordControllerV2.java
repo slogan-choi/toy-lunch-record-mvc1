@@ -27,9 +27,9 @@ public class LunchRecordControllerV2 {
 
     private LunchRecordRepository repository = LunchRecordRepository.getInstance();
 
-    @RequestMapping("/lunchRecord/v2/newform")
+    @RequestMapping("/lunchRecords/v2/new-form")
     public ModelAndView newForm() {
-        return new ModelAndView("new-form");
+        return new ModelAndView("form/new-form");
     }
 
     @RequestMapping("/lunchRecords/v2")
@@ -41,7 +41,7 @@ public class LunchRecordControllerV2 {
         return modelAndView;
     }
 
-    @RequestMapping("/lunchRecord/v2/save")
+    @RequestMapping("/lunchRecords/v2/save")
     public ModelAndView save(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Map<String, RequestInfo> paramMap = createParamMap(request);
         Blob blob;
@@ -79,7 +79,7 @@ public class LunchRecordControllerV2 {
         return modelAndView;
     }
 
-    @RequestMapping("/lunchRecord/v2/update")
+    @RequestMapping("/lunchRecords/v2/update")
     public ModelAndView update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Map<String, RequestInfo> paramMap = createParamMap(request);
         Blob blob;
@@ -124,19 +124,19 @@ public class LunchRecordControllerV2 {
         return modelAndView;
     }
 
-    @RequestMapping("/lunchRecord/v2/updateform")
+    @RequestMapping("/lunchRecords/v2/update-form")
     public ModelAndView updateForm(HttpServletRequest request, HttpServletResponse response) {
         Map<String, RequestInfo> paramMap = createParamMap(request);
         LunchRecord lunchRecord = repository.findById(Long.valueOf((String) paramMap.get("id").getInfo()));
 
         // ModelAndView에 데이터를 담아서 보관한다.
-        ModelAndView modelAndView = new ModelAndView("update-form");
+        ModelAndView modelAndView = new ModelAndView("form/update-form");
         modelAndView.addObject("lunchRecord", lunchRecord);
 
         return modelAndView;
     }
 
-    @RequestMapping("/lunchRecord/v2/delete")
+    @RequestMapping("/lunchRecords/v2/delete")
     public ModelAndView delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Map<String, RequestInfo> paramMap = createParamMap(request);
         repository.delete(Integer.valueOf((String) paramMap.get("id").getInfo()));
@@ -144,13 +144,13 @@ public class LunchRecordControllerV2 {
         return new ModelAndView("delete-result");
     }
 
-    @RequestMapping("/lunchRecord/v2/deleteform")
+    @RequestMapping("/lunchRecords/v2/delete-form")
     public ModelAndView deleteForm(HttpServletRequest request, HttpServletResponse response) {
         Map<String, RequestInfo> paramMap = createParamMap(request);
         LunchRecord lunchRecord = repository.findById(Long.valueOf((String) paramMap.get("id").getInfo()));
 
         // ModelAndView에 데이터를 담아서 보관한다.
-        ModelAndView modelAndView = new ModelAndView("delete-form");
+        ModelAndView modelAndView = new ModelAndView("form/delete-form");
         modelAndView.addObject("lunchRecord", lunchRecord);
 
         return modelAndView;

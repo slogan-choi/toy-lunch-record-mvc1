@@ -41,8 +41,8 @@ class LunchRecordControllerV2Test {
 
     @Test
     void newForm() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/springmvc/lunchRecord/v2/newform"))
-                .andExpect(MockMvcResultMatchers.forwardedUrl("new-form"));
+        mockMvc.perform(MockMvcRequestBuilders.get("/springmvc/lunchRecords/v2/new-form"))
+                .andExpect(MockMvcResultMatchers.forwardedUrl("form/new-form"));
     }
 
     @Test
@@ -72,7 +72,7 @@ class LunchRecordControllerV2Test {
                 now
         );
 
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/springmvc/lunchRecord/v2/save")
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/springmvc/lunchRecords/v2/save")
                         .contentType("application/x-www-form-urlencoded")
                         .param("id", String.valueOf(lunchRecord.getId()))
                         .param("restaurant", lunchRecord.getRestaurant())
@@ -99,7 +99,7 @@ class LunchRecordControllerV2Test {
         LunchRecord lunchRecord = repository.findById(Long.valueOf(getId()));
 
         String restaurant = "testtest";
-        MvcResult mvcResult = this.mockMvc.perform(MockMvcRequestBuilders.post("/springmvc/lunchRecord/v2/update")
+        MvcResult mvcResult = this.mockMvc.perform(MockMvcRequestBuilders.post("/springmvc/lunchRecords/v2/update")
                         .contentType("application/x-www-form-urlencoded")
                         .param("id", String.valueOf(lunchRecord.getId()))
                         .param("restaurant", restaurant)
@@ -120,10 +120,10 @@ class LunchRecordControllerV2Test {
     void updateForm() throws Exception {
         LunchRecord lunchRecord = repository.findById(Long.valueOf(getId()));
 
-        MvcResult mvcResult = this.mockMvc.perform(MockMvcRequestBuilders.post("/springmvc/lunchRecord/v2/updateform")
+        MvcResult mvcResult = this.mockMvc.perform(MockMvcRequestBuilders.post("/springmvc/lunchRecords/v2/update-form")
                         .param("id", String.valueOf(lunchRecord.getId()))
                 )
-                .andExpect(MockMvcResultMatchers.forwardedUrl("update-form"))
+                .andExpect(MockMvcResultMatchers.forwardedUrl("form/update-form"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("lunchRecord"))
                 .andReturn();
 
@@ -138,7 +138,7 @@ class LunchRecordControllerV2Test {
     @Test
     void delete() throws Exception {
         LunchRecord lunchRecord = repository.findById(Long.valueOf(getId()));
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/springmvc/lunchRecord/v2/delete")
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/springmvc/lunchRecords/v2/delete")
                         .param("id", String.valueOf(lunchRecord.getId()))
                 )
                 .andExpect(MockMvcResultMatchers.forwardedUrl("delete-result"));
@@ -147,10 +147,10 @@ class LunchRecordControllerV2Test {
     @Test
     void deleteForm() throws Exception {
         LunchRecord lunchRecord = repository.findById(Long.valueOf(getId()));
-        MvcResult mvcResult = this.mockMvc.perform(MockMvcRequestBuilders.delete("/springmvc/lunchRecord/v2/deleteform")
+        MvcResult mvcResult = this.mockMvc.perform(MockMvcRequestBuilders.delete("/springmvc/lunchRecords/v2/delete-form")
                         .param("id", String.valueOf(lunchRecord.getId()))
                 )
-                .andExpect(MockMvcResultMatchers.forwardedUrl("delete-form"))
+                .andExpect(MockMvcResultMatchers.forwardedUrl("form/delete-form"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("lunchRecord"))
                 .andReturn();
         ;

@@ -45,10 +45,10 @@ class LunchRecordUpdateFormControllerTest {
     void updateForm() throws Exception {
         LunchRecord lunchRecord = repository.findById(Long.valueOf(getId()));
 
-        MvcResult mvcResult = this.mockMvc.perform(MockMvcRequestBuilders.post("/springmvc/lunchRecord/v1/updateform")
+        MvcResult mvcResult = this.mockMvc.perform(MockMvcRequestBuilders.post("/springmvc/lunchRecords/v1/update-form")
                         .param("id", String.valueOf(lunchRecord.getId()))
                 )
-                .andExpect(MockMvcResultMatchers.forwardedUrl("update-form"))
+                .andExpect(MockMvcResultMatchers.forwardedUrl("form/update-form"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("lunchRecord"))
                 .andReturn();
 

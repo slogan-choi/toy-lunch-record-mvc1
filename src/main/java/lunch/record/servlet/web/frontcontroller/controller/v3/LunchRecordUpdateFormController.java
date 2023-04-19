@@ -17,7 +17,7 @@ public class LunchRecordUpdateFormController implements ControllerV3 {
         LunchRecord lunchRecord = repository.findById(Long.valueOf((String) paramMap.get("id").getInfo()));
 
         // Model에 데이터를 담아서 보관한다.
-        ModelView mv = new ModelView("update-form");
+        ModelView mv = new ModelView("form/update-form");
         mv.getModel().put("lunchRecord", lunchRecord);
 
         return mv;

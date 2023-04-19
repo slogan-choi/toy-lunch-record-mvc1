@@ -18,6 +18,6 @@ public class LunchRecordUpdateFormController implements ControllerV4 {
         // Model에 데이터를 담아서 보관한다.
         model.put("lunchRecord", lunchRecord);
 
-        return "update-form";
+        return "form/update-form";
     }
 }

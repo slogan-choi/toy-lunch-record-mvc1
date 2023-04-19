@@ -9,6 +9,6 @@ public class LunchRecordFormController implements ControllerV4 {
 
     @Override
     public String process(Map<String, RequestInfo> paramMap, Map<String, Object> model) {
-        return "new-form";
+        return "form/new-form";
     }
 }

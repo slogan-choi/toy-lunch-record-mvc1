@@ -50,7 +50,7 @@ class LunchRecordSaveControllerTest {
     @BeforeEach
     void before() {
         request.setMethod(HttpMethod.POST.name());
-        request.setRequestURI("/front-controller/v4/lunchRecord/save");
+        request.setRequestURI("/front-controller/v4/lunchRecords/save");
         request.setContentType(APPLICATION_JSON_VALUE);
     }
 

@@ -33,21 +33,21 @@ public class FrontControllerServlet extends HttpServlet {
     }
 
     private void initHandlerMappingMap() {
-        handlerMappingMap.put("/front-controller/v3/lunchRecord/new-form", new lunch.record.servlet.web.frontcontroller.controller.v3.LunchRecordFormController());
-        handlerMappingMap.put("/front-controller/v3/lunchRecord/save", new lunch.record.servlet.web.frontcontroller.controller.v3.LunchRecordSaveController());
+        handlerMappingMap.put("/front-controller/v3/lunchRecords/new-form", new lunch.record.servlet.web.frontcontroller.controller.v3.LunchRecordFormController());
+        handlerMappingMap.put("/front-controller/v3/lunchRecords/save", new lunch.record.servlet.web.frontcontroller.controller.v3.LunchRecordSaveController());
         handlerMappingMap.put("/front-controller/v3/lunchRecords", new lunch.record.servlet.web.frontcontroller.controller.v3.LunchRecordListController());
-        handlerMappingMap.put("/front-controller/v3/lunchRecord/update-form", new lunch.record.servlet.web.frontcontroller.controller.v3.LunchRecordUpdateFormController());
-        handlerMappingMap.put("/front-controller/v3/lunchRecord/update", new lunch.record.servlet.web.frontcontroller.controller.v3.LunchRecordUpdateController());
-        handlerMappingMap.put("/front-controller/v3/lunchRecord/delete-form", new lunch.record.servlet.web.frontcontroller.controller.v3.LunchRecordDeleteFormController());
-        handlerMappingMap.put("/front-controller/v3/lunchRecord/delete", new lunch.record.servlet.web.frontcontroller.controller.v3.LunchRecordDeleteController());
+        handlerMappingMap.put("/front-controller/v3/lunchRecords/update-form", new lunch.record.servlet.web.frontcontroller.controller.v3.LunchRecordUpdateFormController());
+        handlerMappingMap.put("/front-controller/v3/lunchRecords/update", new lunch.record.servlet.web.frontcontroller.controller.v3.LunchRecordUpdateController());
+        handlerMappingMap.put("/front-controller/v3/lunchRecords/delete-form", new lunch.record.servlet.web.frontcontroller.controller.v3.LunchRecordDeleteFormController());
+        handlerMappingMap.put("/front-controller/v3/lunchRecords/delete", new lunch.record.servlet.web.frontcontroller.controller.v3.LunchRecordDeleteController());
 
-        handlerMappingMap.put("/front-controller/v4/lunchRecord/new-form", new lunch.record.servlet.web.frontcontroller.controller.v4.LunchRecordFormController());
-        handlerMappingMap.put("/front-controller/v4/lunchRecord/save", new lunch.record.servlet.web.frontcontroller.controller.v4.LunchRecordSaveController());
+        handlerMappingMap.put("/front-controller/v4/lunchRecords/new-form", new lunch.record.servlet.web.frontcontroller.controller.v4.LunchRecordFormController());
+        handlerMappingMap.put("/front-controller/v4/lunchRecords/save", new lunch.record.servlet.web.frontcontroller.controller.v4.LunchRecordSaveController());
         handlerMappingMap.put("/front-controller/v4/lunchRecords", new lunch.record.servlet.web.frontcontroller.controller.v4.LunchRecordListController());
-        handlerMappingMap.put("/front-controller/v4/lunchRecord/update-form", new lunch.record.servlet.web.frontcontroller.controller.v4.LunchRecordUpdateFormController());
-        handlerMappingMap.put("/front-controller/v4/lunchRecord/update", new lunch.record.servlet.web.frontcontroller.controller.v4.LunchRecordUpdateController());
-        handlerMappingMap.put("/front-controller/v4/lunchRecord/delete-form", new lunch.record.servlet.web.frontcontroller.controller.v4.LunchRecordDeleteFormController());
-        handlerMappingMap.put("/front-controller/v4/lunchRecord/delete", new lunch.record.servlet.web.frontcontroller.controller.v4.LunchRecordDeleteController());
+        handlerMappingMap.put("/front-controller/v4/lunchRecords/update-form", new lunch.record.servlet.web.frontcontroller.controller.v4.LunchRecordUpdateFormController());
+        handlerMappingMap.put("/front-controller/v4/lunchRecords/update", new lunch.record.servlet.web.frontcontroller.controller.v4.LunchRecordUpdateController());
+        handlerMappingMap.put("/front-controller/v4/lunchRecords/delete-form", new lunch.record.servlet.web.frontcontroller.controller.v4.LunchRecordDeleteFormController());
+        handlerMappingMap.put("/front-controller/v4/lunchRecords/delete", new lunch.record.servlet.web.frontcontroller.controller.v4.LunchRecordDeleteController());
     }
 
     private void initHandlerAdapter() {

@@ -23,7 +23,7 @@ public class MvcLunchRecordUpdateFormServlet extends HttpServlet {
         // Model에 데이터를 담아서 보관한다.
         request.setAttribute("lunchRecord", lunchRecord);
 
-        String viewPath = "/WEB-INF/views/update-form.jsp";
+        String viewPath = "/WEB-INF/views/form/update-form.jsp";
         RequestDispatcher dispatcher = request.getRequestDispatcher(viewPath);
         dispatcher.forward(request, response);
     }

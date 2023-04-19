@@ -38,7 +38,7 @@ class LunchRecordFormControllerTest {
     @BeforeEach
     void before() {
         request.setMethod(HttpMethod.GET.name());
-        request.setRequestURI("/front-controller/v3/lunchRecord/new-form");
+        request.setRequestURI("/front-controller/v3/lunchRecords/new-form");
         request.setContentType(APPLICATION_JSON_VALUE);
     }
 
@@ -51,7 +51,7 @@ class LunchRecordFormControllerTest {
         viewResolver(mv.getViewName()).render(mv.getModel(), request, response);
 
         // then
-        assertThat(response.getForwardedUrl()).isEqualTo("/WEB-INF/views/new-form.jsp");
+        assertThat(response.getForwardedUrl()).isEqualTo("/WEB-INF/views/form/new-form.jsp");
     }
 
     private MyView viewResolver(String viewName) {
