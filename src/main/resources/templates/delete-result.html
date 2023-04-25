@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>점심 기록</title>
+        <link href="../css/bootstrap.min.css"
+              th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+        <style>
+            .container {
+                max-height: 600px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="py-5 text-center">
+                <h2>점심 기록 삭제</h2>
+            </div>
+            <h2 th:if="${lunchRecords.id}" th:text="'성공'"></h2>
+            <hr class="my-4">
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-primary" th:onclick="|location.href='@{/springmvc/lunchRecords}'|">목록으로</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

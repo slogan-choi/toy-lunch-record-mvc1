@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>점심 기록</title>
+        <link href="../css/bootstrap.min.css"
+              th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+        <style>
+            .container {
+                max-width: 560px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="py-5 text-center">
+                <h2>점심 기록 등록 폼</h2>
+            </div>
+            <h4 class="mb-3">점심 기록 입력</h4>
+            <form action="new" method="post" enctype="multipart/form-data">
+                <div>
+                    <label for="restaurant">식당</label>
+                    <input type="text" id="restaurant" name="restaurant" class="form-control" placeholder="식당">
+                </div>
+                <div>
+                    <label for="menu">메뉴</label>
+                    <input type="text" id="menu" name="menu" class="form-control" placeholder="메뉴">
+                </div>
+                <div>
+                    <label for="image">이미지</label>
+                    <input type="file" id="image" name="image" class="form-control" placeholder="이미지">
+                </div>
+                <div>
+                    <label for="price">가격</label>
+                    <input type="number" id="price" name="price" class="form-control" placeholder="가격">
+                </div>
+                <div>
+                    <label for="grade">평점</label>
+                    <input type="number" id="grade" name="grade" step="0.1" class="form-control" placeholder="평점">
+                </div>
+                <div>
+                    <label for="averageGrade">평균 평점</label>
+                    <input type="number" id="averageGrade" name="averageGrade" step="0.1" class="form-control" placeholder="평점" readonly>
+                </div>
+                <hr class="my-4">
+                <div class="row">
+                    <div class="col">
+                        <button class="w-100 btn btn-primary btn-lg" type="submit">전송</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

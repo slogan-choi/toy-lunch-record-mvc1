@@ -1,7 +1,6 @@
 package lunch.record.util;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.Base64Utils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
@@ -49,7 +48,4 @@ public class Utils {
         return returnValue;
     }
 
-    public static String getBase64EncodeByte(byte[] content){
-        return Base64Utils.encodeToString(content);
-    }
 }

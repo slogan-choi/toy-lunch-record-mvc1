@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>점심 기록</title>
+        <link href="../css/bootstrap.min.css"
+              th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+        <style>
+            .container {
+                max-width: 600px
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="py-5 text-center">
+                <h2>점심 기록 수정 폼</h2>
+            </div>
+            <hr class="my-4">
+            <div>
+                <table class="table">
+                    <thead>
+                        <th>id</th>
+                        <th>restaurant</th>
+                        <th>menu</th>
+                        <th>image</th>
+                        <th>price</th>
+                        <th>grade</th>
+                        <th>averageGrade</th>
+                        <th>updateAt</th>
+                        <th>createAt</th>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td th:text="${lunchRecord.id}"></td>
+                        <td th:text="${lunchRecord.restaurant}"></td>
+                        <td th:text="${lunchRecord.menu}"></td>
+                        <td> <img th:src="'data:image/png;base64,'+${lunchRecord.image}"/> </td>
+                        <td th:text="${lunchRecord.price}"></td>
+                        <td th:text="${lunchRecord.grade}"></td>
+                        <td th:text="${lunchRecord.averageGrade}"></td>
+                        <td th:text="${lunchRecord.updateAt}"></td>
+                        <td th:text="${lunchRecord.createAt}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <form th:action="@{|${lunchRecord.id}/edit|}" method="post" enctype="multipart/form-data">
+                <div>
+                    <label for="id">id</label>
+                    <input type="text" id="id" name="id" class="form-control" th:value="${lunchRecord.id}" readonly />
+                </div>
+                <div>
+                    <label for="restaurant">식당</label>
+                    <input type="text" id="restaurant" name="restaurant" class="form-control" th:value="${lunchRecord.restaurant}" />
+                </div>
+                <div>
+                    <label for="menu">메뉴</label>
+                    <input type="text" id="menu" name="menu" class="form-control" th:value="${lunchRecord.menu}" />
+                </div>
+                <div>
+                    <label for="image">이미지</label>
+                    <input type="file" id="image" name="image" class="form-control" />
+                </div>
+                <div>
+                    <label for="price">가격</label>
+                    <input type="number" id="price" name="price" class="form-control" th:value="${lunchRecord.price}" />
+                </div>
+                <div>
+                    <label for="grade">평점</label>
+                    <input type="number" id="grade" name="grade" class="form-control" step="0.1" th:value="${lunchRecord.grade}" />
+                </div>
+                <div>
+                    <label for="averageGrade">평균 평점</label>
+                    <input type="number" id="averageGrade" name="averageGrade" class="form-control" step="0.1" th:value="${lunchRecord.averageGrade}" readonly />
+                </div>
+                <hr class="my-4">
+                <div class="row">
+                    <div class="col">
+                        <button class="btn btn-primary" type="submit">저장</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

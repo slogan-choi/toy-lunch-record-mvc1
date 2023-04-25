@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>점심 기록</title>
+        <link href="../css/bootstrap.min.css"
+              th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+        <style>
+            .container {
+                max-height: 560px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="py-5 text-center">
+                <h2>점심 기록 수정</h2>
+            </div>
+            <h2 th:if="${lunchRecord.id}" th:text="'성공!'"></h2>
+            <div>
+                <label for="id">id</label>
+                <input type="text" id="id" name="id" class="form-control" th:value="${lunchRecord.id}" readonly>
+            </div>
+            <div>
+                <label for="restaurant">restaurant</label>
+                <input type="text" id="restaurant" name="restaurant" class="form-control" th:value="${lunchRecord.restaurant}" readonly>
+            </div>
+            <div>
+                <label for="menu">menu</label>
+                <input type="text" id="menu" name="menu" class="form-control" th:value="${lunchRecord.menu}" readonly>
+            </div>
+            <div>
+                <label for="image">image</label>
+                <img th:src="'data:image/png;base64,'+${lunchRecord.image}" id="image" class="form-control" />
+            </div>
+            <div>
+                <label for="price">price</label>
+                <input type="number" id="price" name="price" class="form-control" th:value="${lunchRecord.price}" readonly>
+            </div>
+            <div>
+                <label for="grade">grade</label>
+                <input type="number" id="grade" name="grade" class="form-control" th:value="${lunchRecord.grade}" readonly>
+            </div>
+            <div>
+                <label for="averageGrade">averageGrade</label>
+                <input type="number" id="averageGrade" name="averageGrade" class="form-control" th:value="${lunchRecord.averageGrade}" readonly>
+            </div>
+            <div>
+                <label for="updateAt">updateAt</label>
+                <input type="text" id="updateAt" name="updateAt" class="form-control" th:value="${lunchRecord.updateAt}" readonly>
+            </div>
+            <div>
+                <label for="createAt">createAt</label>
+                <input type="text" id="createAt" name="createAt" class="form-control" th:value="${lunchRecord.createAt}" readonly>
+            </div>
+
+<!--            <ul>-->
+<!--                <li th:text="'id='+${lunchRecord.id}"></li>-->
+<!--                <li th:text="'restaurant='+${lunchRecord.restaurant}"></li>-->
+<!--                <li th:text="'menu='+${lunchRecord.menu}"></li>-->
+<!--                <li th:text="'image='"></li>-->
+<!--                <li> <img th:src="'data:image/png;base64,'+${lunchRecord.image}"/> </li>-->
+<!--                <li th:text="'price='+${lunchRecord.price}"></li>-->
+<!--                <li th:text="'grade='+${lunchRecord.grade}"></li>-->
+<!--                <li th:text="'averageGrade='+${lunchRecord.averageGrade}"></li>-->
+<!--                <li th:text="'updateAt='+${lunchRecord.updateAt}"></li>-->
+<!--                <li th:text="'createAt='+${lunchRecord.createAt}"></li>-->
+<!--            </ul>-->
+            <hr class="my-4">
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-primary"
+                            th:onclick="|location.href='@{/springmvc/lunchRecords}'|" type="button">목록으로</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

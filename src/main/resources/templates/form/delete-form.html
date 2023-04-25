@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>점심 기록</title>
+        <link href="../css/bootstrap.min.css"
+              th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+        <style>
+            .container {
+                max-width: 600px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="py-5 text-center">
+                <h2>점심 기록 삭제 폼</h2>
+            </div>
+            <hr class="my-4">
+            <table class="table">
+                <thead>
+                    <th>id</th>
+                    <th>restaurant</th>
+                    <th>menu</th>
+                    <th>image</th>
+                    <th>price</th>
+                    <th>grade</th>
+                    <th>averageGrade</th>
+                    <th>updateAt</th>
+                    <th>createAt</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td th:text="${lunchRecord.id}"></td>
+                        <td th:text="${lunchRecord.restaurant}"></td>
+                        <td th:text="${lunchRecord.menu}"></td>
+                        <td> <img th:src="'data:image/png;base64,'+${lunchRecord.image}"/> </td>
+                        <td th:text="${lunchRecord.price}"></td>
+                        <td th:text="${lunchRecord.grade}"></td>
+                        <td th:text="${lunchRecord.averageGrade}"></td>
+                        <td th:text="${lunchRecord.updateAt}"></td>
+                        <td th:text="${lunchRecord.createAt}"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <form th:action="@{|${lunchRecord.id}/delete|}" method="post">
+                <div>
+                    <input type="hidden" id="id" name="id" th:value="${lunchRecord.id}" readonly />
+                </div>
+                <hr class="my-4">
+                <div class="row">
+                    <div class="col">
+                        <button class="btn btn-primary" type="submit">저장</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
